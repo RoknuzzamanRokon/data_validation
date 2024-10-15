@@ -68,3 +68,40 @@ def update_mapping_fetch_data(url, params, headers, engine, table_name):
             log += "No data found in response.\n"
             break
     return log
+
+
+def new_mapping_fetch_data(url, params, headers, engine, table_name):
+    while True:
+        response = requests.get(url, headers=headers, params=params)
+        
+        # Check the response status code
+        if response.status_code != 200:
+            print(f"Error: Received status code {response.status_code}")
+            print(f"Response: {response.text}")
+            break
+        
+        try:
+            response_data = response.json()
+            # print("Full API Response:", json.dumps(response_data, indent=4)) 
+        except ValueError as e:
+            print(f"JSON decode error: {e}")
+            print(f"Response content: {response.text}")
+            break
+        
+        if 'Mappings' in response_data and response_data['Mappings']:
+            new_data = response_data['Mappings']  
+            
+            if "ResumeKey" in response_data:
+                # print(f"Continuing to fetch data with ResumeKey: {response_data['ResumeKey']}")
+                save_data_to_db(new_data, engine, table_name)
+                # Update the params to include the new ResumeKey for the next request
+                params['resumeKey'] = response_data["ResumeKey"]
+            else:
+                # If no ResumeKey, end the loop
+                print("No more ResumeKey found. Fetching complete.")
+                break
+        else:
+            print("No data found in response.")
+            break
+    
+

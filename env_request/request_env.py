@@ -33,10 +33,12 @@ def load_environment_variables_local():
 
 def load_environment_variables():
     load_dotenv('/var/.env_server')
-    return {
+    env_vars = {
         'db_host': os.getenv('DB_HOST'),
         'db_user': os.getenv('DB_USER'),
         'db_password': os.getenv('DB_PASSWORD'),
         'db_name': os.getenv('DB_NAME'),
-        'vervotech_api_key': os.getenv('API_KEY_VERVOTECH')
+        'vervotech_api_key': os.getenv('VERVOTECH_API_KEY')
     }
+    # print(env_vars) 
+    return env_vars

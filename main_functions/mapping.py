@@ -1,10 +1,10 @@
-from api_call.params import get_update_mapping_params
-from api_call.urls import get_update_mapping_url
-from api_call.headers import get_update_mapping_headers
-from env_request.request_env import load_environment_variables,load_environment_variables_local
+from api_call.params import get_update_mapping_params, get_new_mapping_params
+from api_call.urls import get_update_mapping_url, get_new_mapping_url
+from api_call.headers import get_update_mapping_headers, get_new_mapping_headers
+from env_request.request_env import load_environment_variables, load_environment_variables_local
 from database.db_connection import get_database_engine
-from api_requests.log_runner import log_run_time_update_mapping_local
-from api_requests.fetch_data_from_api import update_mapping_fetch_data
+from api_requests.log_runner import log_run_time_update_mapping_local, log_run_time_new_mapping_local
+from api_requests.fetch_data_from_api import update_mapping_fetch_data, new_mapping_fetch_data
 
 
 def get_update_mapping_data_process():
@@ -30,34 +30,17 @@ def get_update_mapping_data_process():
 
 
 
-# def get_update_mapping_data_process():
-#     # Load local environment variables
-#     env_vars = load_environment_variables_local()
+def get_new_mapping_data_process():
+    env_vars = load_environment_variables_local()
+    engine = get_database_engine(env_vars=env_vars)
+    table_name = "vervotech_hotel_map_new"
 
-#     # Debug: print out all environment variables to confirm
-#     print("Database User:", env_vars['db_user'])
-#     print("Database Password:", env_vars['db_password'])
-#     print("Database Host:", env_vars['db_host'])
-#     print("Database Name:", env_vars['db_name'])
+    url = get_new_mapping_url()
+    params = get_new_mapping_params()
+    headers = get_new_mapping_headers(env_vars['vervotech_api_key'])
 
-#     # Check the engine creation process
-#     engine = get_database_engine(env_vars)
-#     print(engine)
+    log_run_time_new_mapping_local(execution_date=params['lastUpdateDateTime'])
 
-#     table_name = "vervotech_hotel_map_update"
+    new_mapping_fetch_data(url, params, headers, engine, table_name)
+    print("Fetching and saving process completed.")
 
-#     # API processing
-#     url = get_update_mapping_url()
-#     print("API URL:", url)
-    
-#     params = get_update_mapping_params()
-#     print("API Params:", params)
-
-#     headers = get_update_mapping_headers(env_vars['vervotech_api_key'])
-#     print("API Headers:", headers)
-    
-#     # Log and fetch data
-#     log_run_time_update_mapping_local(execution_date=params['lastUpdateDateTime'])
-#     log = update_mapping_fetch_data(url, params, headers, engine, table_name)
-#     print(log)
-#     print("Fetching and saving process completed.")
