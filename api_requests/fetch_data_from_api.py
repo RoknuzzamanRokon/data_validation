@@ -1,35 +1,9 @@
-
 import requests
 import json
-from datetime import datetime
-from sqlalchemy import text, create_engine
 import os
-from pandas import pd
+from datetime import datetime
+from sqlalchemy import text, create_engine, exc
 
-
-def fetch_and_process_data(csv_file_path, connection_string, table_name):
-    df = pd.read_csv(csv_file_path, low_memory=False)
-
-    df['VervotechId'] = df['UnicaId']
-    df['last_update'] = pd.NA
-    df['UpdateDateFormat'] = pd.NA
-
-    columns_to_insert = ['VervotechId', 'Name', 'Latitude', 'Longitude', 'AddressLine1', 'AddressLine2', 'CityName', 'StateName',
-                         'StateCode', 'CountryName', 'CountryCode', 'PostalCode', 'Rating', 'PropertyType',
-                         'ChainName', 'ChainCode', 'BrandName', 'CityCode', 'CityLocationId', 'MasterCityName',
-                         'LocationIds', 'Phones', 'Emails', 'Fax', 'Website', 'AirportCodes', 'TrainStations',
-                         'ProviderHotelId', 'ProviderFamily', 'GooglePlusCode', 'GooglePlaceId', 'Tags']
-
-    engine = create_engine(connection_string)
-
-    try:
-        for i, row in df[columns_to_insert].iterrows():
-            single_row_df = pd.DataFrame([row])
-            single_row_df.to_sql(table_name, con=engine, if_exists='append', index=False)
-            print(f"Upload successful: {i + 1} row(s) inserted.")
-        print("Upload successfully complete.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
 
 
 def save_data_to_db(data, engine, table_name):
@@ -142,65 +116,96 @@ def update_vervotech_mapping_data(engine):
     insert_into_table_3_stmt = text(f"""
         INSERT INTO vervotech_mapping
         (last_update, VervotechId, UpdateDateFormat, ProviderHotelId, ProviderFamily, ModifiedOn, ChannelIds, ProviderLocationCode, status)
-        VALUES (:last_update, :VervotechId, :UpdateDateFormat, :ProviderHotelId, :ProviderFamily, :ModifiedOn, :ChannelIds, :ProviderLocationCode, 'update successful')
+        VALUES (:last_update, :VervotechId, :UpdateDateFormat, :ProviderHotelId, :ProviderFamily, :ModifiedOn, :ChannelIds, :ProviderLocationCode, 'Update')
     """)
 
     check_existing_record_stmt = text(f"""
         SELECT COUNT(*) FROM vervotech_mapping
-        WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId
+        WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
+    """)
+
+    update_null_status_stmt = text(f"""
+        UPDATE vervotech_mapping
+        SET status = 'Update'
+        WHERE status IS NULL
     """)
 
     def update_mapping_from_table(table_name):
-        update_status_stmt = text(f"""
+        update_status_skipping_stmt = text(f"""
+            UPDATE {table_name}
+            SET status = 'Skipping data'
+            WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
+        """)
+
+        update_status_successful_stmt = text(f"""
             UPDATE {table_name}
             SET status = 'Update data successful'
-            WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId
+            WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
         """)
 
         select_new_data_stmt = text(f"""
             SELECT * FROM {table_name}
             WHERE status = 'new_data'
         """)
-        
-        with engine.connect() as connection:
-            records = connection.execute(select_new_data_stmt).mappings().all()
 
-            for record in records:
-                result = connection.execute(check_existing_record_stmt, {
-                    'VervotechId': record['VervotechId'],
-                    'ProviderHotelId': record['ProviderHotelId']
-                }).scalar()
+        with engine.begin() as connection:  
+            try:
+                # Fetch records with status 'new_data'
+                records = connection.execute(select_new_data_stmt).mappings().all()
 
-                if result > 0:
-                    print(f"Record with VervotechId {record['VervotechId']} and ProviderHotelId {record['ProviderHotelId']} already exists in vervotech_mapping. Skipping.")
-                else:
-                    connection.execute(insert_into_table_3_stmt, {
-                        'last_update': current_time,
+                for record in records:
+                    result = connection.execute(check_existing_record_stmt, {
                         'VervotechId': record['VervotechId'],
-                        'UpdateDateFormat': record['UpdateDateFormat'] or None,
                         'ProviderHotelId': record['ProviderHotelId'],
-                        'ProviderFamily': record['ProviderFamily'],
-                        'ModifiedOn': current_time,
-                        'ChannelIds': record['ChannelIds'] or None,
-                        'ProviderLocationCode': record['ProviderLocationCode'] or None
-                    })
-                    print(f"Inserted record with VervotechId {record['VervotechId']} into vervotech_mapping.")
+                        'ProviderFamily': record['ProviderFamily']
+                    }).scalar()
 
-                    connection.execute(update_status_stmt, {
-                        'VervotechId': record['VervotechId'],
-                        'ProviderHotelId': record['ProviderHotelId']
-                    })
-                    print(f"Updated status to 'Update data successful' in table {table_name} for VervotechId {record['VervotechId']}.")
+                    if result > 0:
+                        print(f"Record with VervotechId {record['VervotechId']} and ProviderHotelId {record['ProviderHotelId']} already exists in vervotech_mapping. Skipping.")
+                        connection.execute(update_status_skipping_stmt, {
+                            'VervotechId': record['VervotechId'],
+                            'ProviderHotelId': record['ProviderHotelId'],
+                            'ProviderFamily': record['ProviderFamily']
+                        })
+                        print(f"Updated status to 'Skipping data' in table {table_name} for VervotechId {record['VervotechId']}.")
+                    else:
+                        connection.execute(insert_into_table_3_stmt, {
+                            'last_update': current_time,
+                            'VervotechId': record['VervotechId'],
+                            'UpdateDateFormat': record['UpdateDateFormat'] or None,
+                            'ProviderHotelId': record['ProviderHotelId'],
+                            'ProviderFamily': record['ProviderFamily'],
+                            'ModifiedOn': current_time,
+                            'ChannelIds': record['ChannelIds'] or None,
+                            'ProviderLocationCode': record['ProviderLocationCode'] or None
+                        })
+                        print(f"Inserted record with VervotechId {record['VervotechId']} into vervotech_mapping (status: 'Update').")
 
-    # Update from both vervotech_hotel_map_new (table 1) and vervotech_hotel_map_update (table 2)
+                        # Update the source table status to 'Update data successful'
+                        connection.execute(update_status_successful_stmt, {
+                            'VervotechId': record['VervotechId'],
+                            'ProviderHotelId': record['ProviderHotelId'],
+                            'ProviderFamily': record['ProviderFamily']
+                        })
+                        print(f"Updated status to 'Update data successful' in table {table_name} for VervotechId {record['VervotechId']}.")
+            
+            except exc.SQLAlchemyError as e:
+                print(f"Error occurred during database operation: {e}")
+                raise
+
+    # Process updates from both tables
     update_mapping_from_table('vervotech_hotel_map_new')
     update_mapping_from_table('vervotech_hotel_map_update')
+
+    with engine.begin() as connection:
+        connection.execute(update_null_status_stmt)
+        print("Updated existing NULL statuses in vervotech_mapping to 'Update'.")
+
 
 
 
 def save_json_file(engine):
     # Directory to save JSON files
-    # json_dir = "D:/data_validation/logs/json_file"
     json_dir = "D:/data_validation/logs/json_file"
     os.makedirs(json_dir, exist_ok=True)  
 
@@ -217,10 +222,8 @@ def save_json_file(engine):
 
         for record in records:
             vervotech_id = record['VervotechId']
-            # If VervotechId is not in the dictionary, create an empty list for it
             if vervotech_id not in data_to_save:
                 data_to_save[vervotech_id] = []
-            # Append the record data to the corresponding VervotechId key
             data_to_save[vervotech_id].append({
                 'VervotechId': record['VervotechId'],
                 'ProviderHotelId': record['ProviderHotelId'],
@@ -228,9 +231,28 @@ def save_json_file(engine):
                 'ProviderLocationCode': record['ProviderLocationCode']
             })
 
-        # Save each VervotechId's data to a separate JSON file
         for vervotech_id, entries in data_to_save.items():
             json_file_path = os.path.join(json_dir, f"{vervotech_id}.json")
+            
+            # If the file already exists, load its content and update
+            if os.path.exists(json_file_path):
+                with open(json_file_path, 'r') as json_file:
+                    existing_data = json.load(json_file)
+                
+                # Create a set for existing unique identifiers to avoid duplicates
+                existing_set = {(entry['ProviderHotelId'], entry['ProviderFamily'], entry['ProviderLocationCode']) for entry in existing_data}
+                
+                # Filter out entries that already exist
+                new_entries = [
+                    entry for entry in entries
+                    if (entry['ProviderHotelId'], entry['ProviderFamily'], entry['ProviderLocationCode']) not in existing_set
+                ]
+                
+                # Update existing data with new unique entries
+                existing_data.extend(new_entries)
+                entries = existing_data
+
+            # Save the updated entries back to the JSON file
             with open(json_file_path, 'w') as json_file:
                 json.dump(entries, json_file, indent=4)
             print(f"Saved data for VervotechId {vervotech_id} to {json_file_path}")
