@@ -1,0 +1,12 @@
+[
+    {
+        "ProviderHotelId": "10282044",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "AB8572",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "68994"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "10280402",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "10916913",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1832273",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "TR10004009",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "TR-IST"
+    },
+    {
+        "ProviderHotelId": "6da6",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1457736",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "122727"
+    }
+]

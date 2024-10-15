@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "10566903",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "885740",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "BDO"
+    },
+    {
+        "ProviderHotelId": "ID10011929",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ID-BDO"
+    }
+]

@@ -1,0 +1,42 @@
+[
+    {
+        "ProviderHotelId": "10287677",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1510668",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "6244"
+    },
+    {
+        "ProviderHotelId": "279710",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "214586",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "BRU"
+    },
+    {
+        "ProviderHotelId": "BE10000348",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "BE-BRU"
+    },
+    {
+        "ProviderHotelId": "s8AN",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "843386",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "1070"
+    },
+    {
+        "ProviderHotelId": "1314118",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "113060"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "102464",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "824725",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "138615"
+    },
+    {
+        "ProviderHotelId": "16941",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "468507",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "HRA"
+    },
+    {
+        "ProviderHotelId": "1Ao4",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1336845",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "119968"
+    }
+]

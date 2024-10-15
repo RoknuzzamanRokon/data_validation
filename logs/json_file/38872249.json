@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10279975",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "17098578",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "ES10006440",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ES-IBZ"
+    },
+    {
+        "ProviderHotelId": "913757",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "26733"
+    },
+    {
+        "ProviderHotelId": "1038023",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "150275"
+    }
+]

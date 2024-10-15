@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "10286091",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1035077",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "FET"
+    },
+    {
+        "ProviderHotelId": "89669",
+        "ProviderFamily": "HyperGuestDirect",
+        "ProviderLocationCode": null
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "101564",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1396918",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "98636",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "104114",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "ON"
+    },
+    {
+        "ProviderHotelId": "CA10003052",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "CA-YYZ"
+    },
+    {
+        "ProviderHotelId": "1293449",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "140333"
+    }
+]

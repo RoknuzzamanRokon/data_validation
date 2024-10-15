@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "10251988",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "9863537",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1169702",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1402650",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "956164",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "21104"
+    },
+    {
+        "ProviderHotelId": "478686181",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "18848"
+    },
+    {
+        "ProviderHotelId": "1245968",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "123410"
+    }
+]

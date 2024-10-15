@@ -1,0 +1,42 @@
+[
+    {
+        "ProviderHotelId": "100065",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "297765",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "10674"
+    },
+    {
+        "ProviderHotelId": "788037",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "76934",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "589342",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "ROE"
+    },
+    {
+        "ProviderHotelId": "IT10008602",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "IT-ROE"
+    },
+    {
+        "ProviderHotelId": "723758",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "640"
+    },
+    {
+        "ProviderHotelId": "1230591",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "134622"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "104695",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "15952648",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "837897",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "AD10000170",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "AD-LES"
+    },
+    {
+        "ProviderHotelId": "51426",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "15225"
+    },
+    {
+        "ProviderHotelId": "1029485",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "125817"
+    }
+]

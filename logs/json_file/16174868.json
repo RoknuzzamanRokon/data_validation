@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "10316056",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "5009875",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "20704"
+    },
+    {
+        "ProviderHotelId": "ID10017654",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ID-AYR"
+    }
+]

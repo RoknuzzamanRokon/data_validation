@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "10265653",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2146205",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "256328"
+    },
+    {
+        "ProviderHotelId": "11900733",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "692078",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "585742",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "PMI"
+    },
+    {
+        "ProviderHotelId": "456943",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "114681"
+    }
+]

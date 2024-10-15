@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "100103",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1569598",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "22264"
+    },
+    {
+        "ProviderHotelId": "1639554",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "188989",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "MPH"
+    },
+    {
+        "ProviderHotelId": "PH10001170",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "PH-BRD"
+    },
+    {
+        "ProviderHotelId": "1079396",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "146448"
+    }
+]

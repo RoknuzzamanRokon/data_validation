@@ -1,0 +1,42 @@
+[
+    {
+        "ProviderHotelId": "10257166",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2431795",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "13894"
+    },
+    {
+        "ProviderHotelId": "2689434",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1778028",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "622957",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "CH10000352",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "CH-GDD"
+    },
+    {
+        "ProviderHotelId": "399379968",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "18614"
+    },
+    {
+        "ProviderHotelId": "1294324",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "121097"
+    }
+]

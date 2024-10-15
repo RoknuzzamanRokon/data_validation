@@ -1,0 +1,47 @@
+[
+    {
+        "ProviderHotelId": "10167624",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "44113508",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2140565",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1399595",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "999427",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "LIM"
+    },
+    {
+        "ProviderHotelId": "59542",
+        "ProviderFamily": "HyperGuestDirect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "PE10000548",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "PE-LIM"
+    },
+    {
+        "ProviderHotelId": "401116569",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "17922"
+    },
+    {
+        "ProviderHotelId": "5023251",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "124915"
+    }
+]

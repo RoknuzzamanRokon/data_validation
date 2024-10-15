@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "10256921",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2324425",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "6244"
+    },
+    {
+        "ProviderHotelId": "13123472",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1054568",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "BE10000615",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "BE-BRU"
+    },
+    {
+        "ProviderHotelId": "A37051",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "1070"
+    },
+    {
+        "ProviderHotelId": "1528832",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "113060"
+    }
+]

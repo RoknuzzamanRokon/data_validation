@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "102564",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "812245",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "131735"
+    },
+    {
+        "ProviderHotelId": "463598",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1961827",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "77657",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "586506",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "YNG"
+    },
+    {
+        "ProviderHotelId": "1336313",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "142467"
+    }
+]

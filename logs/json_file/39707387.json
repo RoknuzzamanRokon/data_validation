@@ -1,0 +1,47 @@
+[
+    {
+        "ProviderHotelId": "10281038",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2982235",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "104906"
+    },
+    {
+        "ProviderHotelId": "3738110",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1516890",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "653505",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "213776",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "LG"
+    },
+    {
+        "ProviderHotelId": "GGed",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "326679039",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "17100"
+    },
+    {
+        "ProviderHotelId": "1360985",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "147531"
+    }
+]

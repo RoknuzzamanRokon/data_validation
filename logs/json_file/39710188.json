@@ -1,0 +1,42 @@
+[
+    {
+        "ProviderHotelId": "10265704",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2472495",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "6944"
+    },
+    {
+        "ProviderHotelId": "1216794",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "579092",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "CZ10001041",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "CZ-PRG"
+    },
+    {
+        "ProviderHotelId": "mXEY",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "326678000",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "16219"
+    },
+    {
+        "ProviderHotelId": "1295530",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "131864"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "10256957",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "155307",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "GYD"
+    },
+    {
+        "ProviderHotelId": "AZ10000104",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "AZ-GYD"
+    },
+    {
+        "ProviderHotelId": "945836",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "23330"
+    },
+    {
+        "ProviderHotelId": "144566",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "15450"
+    },
+    {
+        "ProviderHotelId": "1244344",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "110755"
+    }
+]

@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "10537191",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "739657",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "CN1"
+    },
+    {
+        "ProviderHotelId": "CN10009129",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "CN-CAN"
+    },
+    {
+        "ProviderHotelId": "0vyg",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    }
+]

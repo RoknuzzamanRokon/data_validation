@@ -1,0 +1,52 @@
+[
+    {
+        "ProviderHotelId": "102926",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "793855",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "109755"
+    },
+    {
+        "ProviderHotelId": "7655",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1948593",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "50890",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "SFO"
+    },
+    {
+        "ProviderHotelId": "US10031827",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "US-9807"
+    },
+    {
+        "ProviderHotelId": "5snv",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "898293",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "38387"
+    },
+    {
+        "ProviderHotelId": "161503",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "19919"
+    },
+    {
+        "ProviderHotelId": "1341209",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "136014"
+    }
+]

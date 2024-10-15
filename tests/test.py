@@ -1,32 +1,71 @@
-from sqlalchemy import create_engine, text
-import pymysql
+from sqlalchemy import text
+from datetime import datetime
 
-# Database connection details
-db_host = "ls-2606b703826b2a67a9b8ffc6a904a205faee891e.c1m8so4gsag3.ap-southeast-1.rds.amazonaws.com"
-db_user = "itt_contents"
-db_password = "h%40HMbaa98569745"
-db_name = "itt_master_contents"
-table_name = "vervotech_hotel_list"
+def update_vervotech_mapping(engine):
+    current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
+    log = ""
 
-# Create connection engine
-connection_string = f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}"
-engine = create_engine(connection_string)
+    # Define the insert statement for table 3 (vervotech_mapping)
+    insert_into_table_3_stmt = text(f"""
+        INSERT INTO vervotech_mapping
+        (last_update, VervotechId, UpdateDateFormat, ProviderHotelId, ProviderFamily, ModifiedOn, ChannelIds, ProviderLocationCode, status)
+        VALUES (:last_update, :VervotechId, :UpdateDateFormat, :ProviderHotelId, :ProviderFamily, :ModifiedOn, :ChannelIds, :ProviderLocationCode, 'update')
+    """)
 
-# List of columns to be added
-columns_to_add = [
-    'Name', 'Latitude', 'Longitude', 'AddressLine1', 'AddressLine2', 'CityName', 'StateName', 
-    'StateCode', 'CountryName', 'CountryCode', 'PostalCode', 'Rating', 'PropertyType', 
-    'ChainName', 'ChainCode', 'BrandName', 'CityCode', 'CityLocationId', 'MasterCityName', 
-    'LocationIds', 'Phones', 'Emails', 'Fax', 'Website', 'AirportCodes', 'TrainStations', 
-    'ProviderHotelId', 'ProviderFamily', 'GooglePlusCode', 'GooglePlaceId', 'Tags'
-]
+    # Define the update status statement for tables 1 and 2
+    update_status_stmt = text(f"""
+        UPDATE {{}}
+        SET status = 'update successful'
+        WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId
+    """)
 
-# Add each column to the table
-with engine.connect() as connection:
-    for column in columns_to_add:
-        alter_query = text(f"""
-        ALTER TABLE {table_name}
-        ADD COLUMN {column} VARCHAR(255);
+    # Check if record exists in table 3 (vervotech_mapping)
+    check_existing_record_stmt = text(f"""
+        SELECT COUNT(*) FROM vervotech_mapping
+        WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId
+    """)
+
+    def update_mapping_from_table(table_name):
+        # Fetch records from table 1 or 2 where status is "new_data"
+        select_new_data_stmt = text(f"""
+            SELECT * FROM {table_name}
+            WHERE status = 'new_data'
         """)
-        connection.execute(alter_query)
-        print(f"Column '{column}' added.")
+        with engine.connect() as connection:
+            records = connection.execute(select_new_data_stmt).fetchall()
+
+            for record in records:
+                # Check if record already exists in table 3
+                result = connection.execute(check_existing_record_stmt, {
+                    'VervotechId': record['VervotechId'],
+                    'ProviderHotelId': record['ProviderHotelId']
+                }).scalar()
+
+                if result > 0:
+                    log += f"Record with VervotechId {record['VervotechId']} and ProviderHotelId {record['ProviderHotelId']} already exists in vervotech_mapping. Skipping.\n"
+                else:
+                    # If not exists, insert into table 3 (vervotech_mapping)
+                    connection.execute(insert_into_table_3_stmt, {
+                        'last_update': current_time,
+                        'VervotechId': record['VervotechId'],
+                        'UpdateDateFormat': record['UpdateDateFormat'] or None,
+                        'ProviderHotelId': record['ProviderHotelId'],
+                        'ProviderFamily': record['ProviderFamily'],
+                        'ModifiedOn': current_time,
+                        'ChannelIds': record['ChannelIds'] or None,
+                        'ProviderLocationCode': record['ProviderLocationCode'] or None
+                    })
+                    log += f"Inserted record with VervotechId {record['VervotechId']} into vervotech_mapping.\n"
+
+                    # Update the status of the record in table 1 or 2
+                    connection.execute(update_status_stmt.format(table_name), {
+                        'VervotechId': record['VervotechId'],
+                        'ProviderHotelId': record['ProviderHotelId']
+                    })
+                    log += f"Updated status to 'update successful' in table {table_name} for VervotechId {record['VervotechId']}.\n"
+
+    # Update from both vervotech_hotel_map_new (table 1) and vervotech_hotel_map_update (table 2)
+    update_mapping_from_table('vervotech_hotel_map_new')
+    update_mapping_from_table('vervotech_hotel_map_update')
+
+    return log

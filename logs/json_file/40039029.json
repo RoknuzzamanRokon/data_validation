@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "10574968",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "68728283",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2490060",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "Wsg7",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    }
+]

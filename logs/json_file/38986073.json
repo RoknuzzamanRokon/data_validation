@@ -1,0 +1,47 @@
+[
+    {
+        "ProviderHotelId": "104950",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1101338",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "64212"
+    },
+    {
+        "ProviderHotelId": "1631485",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1454099",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "233066",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "163239",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "MAY"
+    },
+    {
+        "ProviderHotelId": "IE10001106",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "IE-MYO"
+    },
+    {
+        "ProviderHotelId": "187609",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "52468"
+    },
+    {
+        "ProviderHotelId": "1270003",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "111108"
+    }
+]

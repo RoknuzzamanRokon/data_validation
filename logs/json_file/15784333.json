@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "10280531",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "23797451",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "929071",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "BCN"
+    },
+    {
+        "ProviderHotelId": "IAWg",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "C5CF41",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "17666"
+    },
+    {
+        "ProviderHotelId": "1590320",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "417868"
+    }
+]

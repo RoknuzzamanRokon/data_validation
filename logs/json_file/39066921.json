@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "10553757",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "ID10014898",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ID-KNO"
+    },
+    {
+        "ProviderHotelId": "qhh3",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "6103374",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "128177"
+    }
+]

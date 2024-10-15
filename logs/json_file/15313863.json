@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "1002678",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "9624270",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1018429",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "AU10001517",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "AU-ECH"
+    },
+    {
+        "ProviderHotelId": "0l8i",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1511445",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "116430"
+    }
+]

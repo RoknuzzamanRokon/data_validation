@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "105528",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1345078",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "185838"
+    },
+    {
+        "ProviderHotelId": "1142279",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "234092",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "324841",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "NYC"
+    },
+    {
+        "ProviderHotelId": "bEAC",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1286485",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "117465"
+    }
+]

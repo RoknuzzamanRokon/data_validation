@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "10256483",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "20193507",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1840579",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "604583",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "814637",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "BTZ"
+    },
+    {
+        "ProviderHotelId": "112986",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "21033"
+    },
+    {
+        "ProviderHotelId": "1380890",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "141831"
+    }
+]

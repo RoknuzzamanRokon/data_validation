@@ -1,0 +1,42 @@
+[
+    {
+        "ProviderHotelId": "101381",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2553235",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "96406"
+    },
+    {
+        "ProviderHotelId": "15856346",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "103896",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "72894",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "HAI"
+    },
+    {
+        "ProviderHotelId": "80478",
+        "ProviderFamily": "HyperGuestDirect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "dcH9",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "550047",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "22879"
+    }
+]

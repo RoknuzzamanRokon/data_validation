@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "1032330",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "15949621",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "837894",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "PH10000623",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "PH-MTA"
+    },
+    {
+        "ProviderHotelId": "D18223",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "46674"
+    },
+    {
+        "ProviderHotelId": "1563396",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "131563"
+    }
+]

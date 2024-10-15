@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "1016420",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "A5F356",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "164"
+    },
+    {
+        "ProviderHotelId": "1811086",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "135697"
+    }
+]

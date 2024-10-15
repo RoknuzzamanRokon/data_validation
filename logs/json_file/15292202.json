@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "105059",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "5446295",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "82116"
+    },
+    {
+        "ProviderHotelId": "912916",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1926826",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "834085",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "MAR"
+    },
+    {
+        "ProviderHotelId": "1254908",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "127498"
+    }
+]

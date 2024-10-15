@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "10284409",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "3787255",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "7554"
+    },
+    {
+        "ProviderHotelId": "2521356",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "607710",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "803995",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "MRS"
+    },
+    {
+        "ProviderHotelId": "FR10006410",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "FR-MRS"
+    },
+    {
+        "ProviderHotelId": "1332828",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "126878"
+    }
+]

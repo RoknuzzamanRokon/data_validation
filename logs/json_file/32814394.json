@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "10302689",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "322475",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "105846"
+    },
+    {
+        "ProviderHotelId": "42684679",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1558318",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "837328",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "JP10005953",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "JP-SME"
+    },
+    {
+        "ProviderHotelId": "1545101",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "139408"
+    }
+]

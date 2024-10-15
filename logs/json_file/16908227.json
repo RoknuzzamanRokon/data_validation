@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "10180814",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "41915384",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2140420",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1031388",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "CUZ"
+    },
+    {
+        "ProviderHotelId": "90122",
+        "ProviderFamily": "HyperGuestDirect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "6256918",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "155077"
+    }
+]

@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "101539",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1310018",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "133835"
+    },
+    {
+        "ProviderHotelId": "100086",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "US10025764",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "US-2214"
+    }
+]

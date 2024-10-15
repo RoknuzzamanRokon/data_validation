@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10265127",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "129791",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "PRG"
+    },
+    {
+        "ProviderHotelId": "CZ10000350",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "CZ-PRG"
+    },
+    {
+        "ProviderHotelId": "KrVz",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "121264",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "19547"
+    }
+]

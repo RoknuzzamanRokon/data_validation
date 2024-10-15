@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "10265516",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "CH10000135",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "CH-BSL"
+    },
+    {
+        "ProviderHotelId": "1091171",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "111155"
+    }
+]

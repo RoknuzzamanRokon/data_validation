@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "10281080",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1869795",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "HOgt",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1341106",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "126798"
+    }
+]

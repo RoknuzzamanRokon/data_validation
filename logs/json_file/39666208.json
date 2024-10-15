@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10163234",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "5533855",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "494"
+    },
+    {
+        "ProviderHotelId": "642461",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "HRG"
+    },
+    {
+        "ProviderHotelId": "A63151",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "8123"
+    },
+    {
+        "ProviderHotelId": "1925160",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "121580"
+    }
+]

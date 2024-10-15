@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "1040367",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "12012204",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "Rymh",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1470415",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "134019"
+    }
+]

@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "10256583",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1771481",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "SE10000819",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "SE-GOT"
+    }
+]

@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10567049",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "4994495",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "321035"
+    },
+    {
+        "ProviderHotelId": "45226273",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "872641",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "JOG"
+    },
+    {
+        "ProviderHotelId": "ID10015216",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ID-JOG"
+    }
+]

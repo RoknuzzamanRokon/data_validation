@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "1030371",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1793582",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "356773",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "DAE"
+    },
+    {
+        "ProviderHotelId": "C70472",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "26945"
+    }
+]

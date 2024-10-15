@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "10283846",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "CZ10000304",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "CZ-PRG"
+    },
+    {
+        "ProviderHotelId": "YKIz",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    }
+]

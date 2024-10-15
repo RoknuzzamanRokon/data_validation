@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "10238038",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "44120309",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2151437",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "6119040",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "125854"
+    }
+]

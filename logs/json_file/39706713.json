@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "100561",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1628758",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "71266"
+    },
+    {
+        "ProviderHotelId": "40428",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "209540",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "VIR"
+    },
+    {
+        "ProviderHotelId": "US10036460",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "US-10818"
+    },
+    {
+        "ProviderHotelId": "Iota",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1332490",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "144658"
+    }
+]

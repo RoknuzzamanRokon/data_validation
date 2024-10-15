@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10191087",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "97075406",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2579180",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1003789",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "FLO"
+    },
+    {
+        "ProviderHotelId": "6036435",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "118471"
+    }
+]

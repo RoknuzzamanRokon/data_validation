@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "10577187",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "3961685",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "305575"
+    },
+    {
+        "ProviderHotelId": "yXPr",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    }
+]

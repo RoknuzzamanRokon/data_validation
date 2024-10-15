@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "1043392",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "4231075",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "9874"
+    },
+    {
+        "ProviderHotelId": "24209155",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "858296",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "630012",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "SKI"
+    },
+    {
+        "ProviderHotelId": "cB8k",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1807819",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "138447"
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "10538",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "20684",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "22204"
+    },
+    {
+        "ProviderHotelId": "1641129",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "28647",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "PH10000019",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "PH-DVO"
+    },
+    {
+        "ProviderHotelId": "76784",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "17948"
+    },
+    {
+        "ProviderHotelId": "1135978",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "115638"
+    }
+]

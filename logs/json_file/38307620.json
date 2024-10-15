@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "10238631",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "891207",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "CSX"
+    },
+    {
+        "ProviderHotelId": "cvys",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    }
+]

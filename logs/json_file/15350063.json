@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10286859",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "3841425",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "8324"
+    },
+    {
+        "ProviderHotelId": "25174392",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "DE10006675",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "DE-HAM"
+    },
+    {
+        "ProviderHotelId": "1812408",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "120596"
+    }
+]

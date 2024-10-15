@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "10282384",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "56132",
+        "ProviderFamily": "HyperGuestDirect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "EVXB",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    }
+]

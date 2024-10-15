@@ -1,0 +1,47 @@
+[
+    {
+        "ProviderHotelId": "10256794",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "5423335",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "13884"
+    },
+    {
+        "ProviderHotelId": "991643",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "622910",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "359104",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "GVA"
+    },
+    {
+        "ProviderHotelId": "CH10000446",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "CH-GVA"
+    },
+    {
+        "ProviderHotelId": "1wsZ",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "CB3C45",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "1482"
+    },
+    {
+        "ProviderHotelId": "1302500",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "118434"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "103724",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "796825",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "69126"
+    },
+    {
+        "ProviderHotelId": "47685",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "127000",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "503827",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "AL4"
+    },
+    {
+        "ProviderHotelId": "rGR6",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    }
+]

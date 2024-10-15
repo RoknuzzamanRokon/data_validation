@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "104253",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1049256",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "AT10002017",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "AT-WHS"
+    },
+    {
+        "ProviderHotelId": "1007474",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "143230"
+    }
+]

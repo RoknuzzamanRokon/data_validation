@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10185592",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "46389980",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "ID10015482",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ID-PNJ"
+    },
+    {
+        "ProviderHotelId": "U3Mx",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "6147613",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": null
+    }
+]

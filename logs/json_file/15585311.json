@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "10288681",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "4736855",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "10254"
+    },
+    {
+        "ProviderHotelId": "35248407",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1529267",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "428423",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "437078967",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "17084"
+    },
+    {
+        "ProviderHotelId": "1356741",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "105084"
+    }
+]

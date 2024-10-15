@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "1015982",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "ID10019159",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ID-CBN"
+    },
+    {
+        "ProviderHotelId": "1733150",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "114833"
+    }
+]

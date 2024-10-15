@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "1047300",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2877935",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "22454"
+    },
+    {
+        "ProviderHotelId": "13457393",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "701197",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "TXG"
+    },
+    {
+        "ProviderHotelId": "TW10001642",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "TW-TXG"
+    },
+    {
+        "ProviderHotelId": "LyWJ",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1498387",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "139004"
+    }
+]

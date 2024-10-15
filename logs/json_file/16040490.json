@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "1000317",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "35615789",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1074616",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "894057",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "CE1C92",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "95094"
+    },
+    {
+        "ProviderHotelId": "5284799",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "136086"
+    }
+]

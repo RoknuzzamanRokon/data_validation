@@ -1,0 +1,42 @@
+[
+    {
+        "ProviderHotelId": "10286001",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "5399905",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "13934"
+    },
+    {
+        "ProviderHotelId": "13224466",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1780169",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "340220",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "SWS"
+    },
+    {
+        "ProviderHotelId": "CH10000873",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "CH-MLN"
+    },
+    {
+        "ProviderHotelId": "H35C",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1548424",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "104182"
+    }
+]

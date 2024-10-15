@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "1056675",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1649189",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "880243",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1025822",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "KRK"
+    },
+    {
+        "ProviderHotelId": "PL10000975",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "PL-KRK"
+    },
+    {
+        "ProviderHotelId": "1694587",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "124293"
+    }
+]

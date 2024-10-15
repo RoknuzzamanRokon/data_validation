@@ -1,0 +1,57 @@
+[
+    {
+        "ProviderHotelId": "10280953",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "596125",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "109405"
+    },
+    {
+        "ProviderHotelId": "4506316",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1741289",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "108790",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "118210",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "113395",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "LPA"
+    },
+    {
+        "ProviderHotelId": "ES10007569",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ES-LPA"
+    },
+    {
+        "ProviderHotelId": "yVAS",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "117260",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "764"
+    },
+    {
+        "ProviderHotelId": "1147392",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "146168"
+    }
+]

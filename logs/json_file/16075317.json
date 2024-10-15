@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "1016599",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "3331425",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "170435"
+    },
+    {
+        "ProviderHotelId": "24093154",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "80593",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "VGO"
+    },
+    {
+        "ProviderHotelId": "895509",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "210"
+    },
+    {
+        "ProviderHotelId": "1344677",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "133236"
+    }
+]

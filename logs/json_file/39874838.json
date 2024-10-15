@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "10271907",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1626878",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "95286"
+    },
+    {
+        "ProviderHotelId": "77814689",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "113923",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "COL"
+    },
+    {
+        "ProviderHotelId": "79318",
+        "ProviderFamily": "HyperGuestDirect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "A7B043",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "135038"
+    },
+    {
+        "ProviderHotelId": "5016019",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "115263"
+    }
+]

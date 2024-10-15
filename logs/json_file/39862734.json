@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "10579546",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "3506195",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "105586"
+    },
+    {
+        "ProviderHotelId": "9KMh",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1678414",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "150205"
+    }
+]

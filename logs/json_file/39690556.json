@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "104131",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "746505",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "14864"
+    },
+    {
+        "ProviderHotelId": "GB10008308",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "GB-YXU"
+    },
+    {
+        "ProviderHotelId": "186908",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "52612"
+    },
+    {
+        "ProviderHotelId": "1233133",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "126632"
+    }
+]

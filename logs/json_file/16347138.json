@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "1032669",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2773045",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "6774"
+    },
+    {
+        "ProviderHotelId": "21340142",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "605714",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "768155",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "ZAG"
+    }
+]

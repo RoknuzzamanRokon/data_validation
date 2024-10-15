@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "1041284",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "702575",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "97016"
+    },
+    {
+        "ProviderHotelId": "121429",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "489342",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "GAS"
+    },
+    {
+        "ProviderHotelId": "070105",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "99236"
+    },
+    {
+        "ProviderHotelId": "1273818",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "118923"
+    }
+]

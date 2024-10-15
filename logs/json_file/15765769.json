@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "10265189",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "7151925",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1617817",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "655176",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "NL10001569",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "NL-UTT"
+    },
+    {
+        "ProviderHotelId": "1235817",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "148400"
+    }
+]

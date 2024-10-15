@@ -4,7 +4,7 @@ from api_call.headers import get_update_mapping_headers, get_new_mapping_headers
 from env_request.request_env import load_environment_variables, load_environment_variables_local
 from database.db_connection import get_database_engine
 from api_requests.log_runner import log_run_time_update_mapping_local, log_run_time_new_mapping_local
-from api_requests.fetch_data_from_api import update_mapping_fetch_data, new_mapping_fetch_data
+from api_requests.fetch_data_from_api import update_mapping_fetch_data, new_mapping_fetch_data, update_vervotech_mapping_data, save_json_file
 
 
 def get_update_mapping_data_process():
@@ -29,7 +29,6 @@ def get_update_mapping_data_process():
     print("Fetching and saving process completed.")
 
 
-
 def get_new_mapping_data_process():
     env_vars = load_environment_variables_local()
     engine = get_database_engine(env_vars=env_vars)
@@ -44,3 +43,16 @@ def get_new_mapping_data_process():
     new_mapping_fetch_data(url, params, headers, engine, table_name)
     print("Fetching and saving process completed.")
 
+
+def update_vervotech_mapping_table():
+    env_vars = load_environment_variables_local()
+    engine = get_database_engine(env_vars=env_vars)
+    update_vervotech_mapping_data(engine=engine)
+    print("Fetching and saving process completed.")
+
+
+def create_json_file():
+    env_vars = load_environment_variables_local()
+    engine = get_database_engine(env_vars=env_vars)
+    save_json_file(engine=engine)
+    print("Create all json file successful.")

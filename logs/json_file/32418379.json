@@ -1,0 +1,12 @@
+[
+    {
+        "ProviderHotelId": "10264813",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "ES10014535",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ES-VLC"
+    }
+]

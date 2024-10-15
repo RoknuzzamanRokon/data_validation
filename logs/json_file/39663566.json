@@ -1,0 +1,42 @@
+[
+    {
+        "ProviderHotelId": "10307232",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1670028",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "9824"
+    },
+    {
+        "ProviderHotelId": "4395212",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "796656",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "336976",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "RHO"
+    },
+    {
+        "ProviderHotelId": "GR10006692",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "GR-RHO"
+    },
+    {
+        "ProviderHotelId": "128809193",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "16715"
+    },
+    {
+        "ProviderHotelId": "1194016",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "147505"
+    }
+]

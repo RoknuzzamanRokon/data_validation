@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "101355",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "739825",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "81616"
+    },
+    {
+        "ProviderHotelId": "280882",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "389270",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "652027",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "ATL"
+    },
+    {
+        "ProviderHotelId": "A1DD46",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "77335"
+    },
+    {
+        "ProviderHotelId": "1106028",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "130890"
+    }
+]

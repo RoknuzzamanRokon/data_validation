@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "10179582",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "41179674",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1618900",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "964073",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "AKL"
+    },
+    {
+        "ProviderHotelId": "I26z",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "6106680",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "109654"
+    }
+]

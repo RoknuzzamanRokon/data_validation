@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10282934",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "958755",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "12744"
+    },
+    {
+        "ProviderHotelId": "6019850",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1700625",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "192291",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "BTS"
+    }
+]

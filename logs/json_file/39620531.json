@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "104454",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "508585",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "10414"
+    },
+    {
+        "ProviderHotelId": "526030",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1484307",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "333090",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "HSI"
+    },
+    {
+        "ProviderHotelId": "1163668",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "145234"
+    }
+]

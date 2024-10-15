@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "1004495",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1018003",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "AU10001286",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "AU-DLD"
+    },
+    {
+        "ProviderHotelId": "1503259",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "115663"
+    }
+]

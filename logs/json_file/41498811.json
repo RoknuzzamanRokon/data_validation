@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "10256475",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1035402",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "AT10000493",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "AT-INN"
+    },
+    {
+        "ProviderHotelId": "fpXp",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    }
+]

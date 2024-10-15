@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10283071",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1865682",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "651118",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "GB10009603",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "GB-LPL"
+    },
+    {
+        "ProviderHotelId": "1056379",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "125478"
+    }
+]

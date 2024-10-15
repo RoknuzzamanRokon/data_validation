@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "104805",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "2175375",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "10664"
+    },
+    {
+        "ProviderHotelId": "12591519",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1494875",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "C14E99",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "3221"
+    },
+    {
+        "ProviderHotelId": "148547",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "17146"
+    }
+]

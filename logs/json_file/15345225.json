@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "1001148",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "31411228",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1182871",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "900412",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "KSF"
+    },
+    {
+        "ProviderHotelId": "GnrX",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1530730",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "123220"
+    }
+]

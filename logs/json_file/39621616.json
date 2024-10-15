@@ -1,0 +1,32 @@
+[
+    {
+        "ProviderHotelId": "1032422",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "3601935",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "22604"
+    },
+    {
+        "ProviderHotelId": "12592922",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "TH10015667",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "TH-CEI"
+    },
+    {
+        "ProviderHotelId": "5IIQ",
+        "ProviderFamily": "Rakuten",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1469032",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "114979"
+    }
+]

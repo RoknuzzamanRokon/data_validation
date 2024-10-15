@@ -1,0 +1,22 @@
+[
+    {
+        "ProviderHotelId": "1021115",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "21398314",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "864273",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "FSZ"
+    },
+    {
+        "ProviderHotelId": "1688219",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "101542"
+    }
+]

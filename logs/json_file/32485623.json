@@ -1,0 +1,27 @@
+[
+    {
+        "ProviderHotelId": "10265558",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "464465",
+        "ProviderFamily": "DOTW",
+        "ProviderLocationCode": "7224"
+    },
+    {
+        "ProviderHotelId": "16014",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "TUR"
+    },
+    {
+        "ProviderHotelId": "87841",
+        "ProviderFamily": "Stuba",
+        "ProviderLocationCode": "16381"
+    },
+    {
+        "ProviderHotelId": "1114114",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "140401"
+    }
+]

@@ -1,0 +1,17 @@
+[
+    {
+        "ProviderHotelId": "104850",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "90383",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "ES10006423",
+        "ProviderFamily": "MGHoliday",
+        "ProviderLocationCode": "ES-IBZ"
+    }
+]

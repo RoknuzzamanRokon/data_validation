@@ -1,0 +1,37 @@
+[
+    {
+        "ProviderHotelId": "100342",
+        "ProviderFamily": "Agoda",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "22667",
+        "ProviderFamily": "EAN",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "1885177",
+        "ProviderFamily": "GRNConnect",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "99477",
+        "ProviderFamily": "GoGlobal",
+        "ProviderLocationCode": null
+    },
+    {
+        "ProviderHotelId": "209155",
+        "ProviderFamily": "HotelBeds",
+        "ProviderLocationCode": "JAX"
+    },
+    {
+        "ProviderHotelId": "778490",
+        "ProviderFamily": "Restel",
+        "ProviderLocationCode": "27316"
+    },
+    {
+        "ProviderHotelId": "1343858",
+        "ProviderFamily": "TBO",
+        "ProviderLocationCode": "121778"
+    }
+]
