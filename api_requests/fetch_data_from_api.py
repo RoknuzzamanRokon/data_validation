@@ -221,6 +221,7 @@ def update_vervotech_mapping_data(engine):
 
 
 
+
 def save_json_file(engine):
     # Directory to save JSON files
     # json_dir = "/var/www/hotelmap.gtrsystem.com"
@@ -275,4 +276,80 @@ def save_json_file(engine):
                 json.dump(entries, json_file, indent=4)
             print(f"Saved data for VervotechId {vervotech_id} to {json_file_path}")
 
+
+
+
+
+def update_with_provider_hotel_ids(url, payload, headers, engine, table_name):
+    """
+    Fetches data from the API using the provided URL, payload, and headers, 
+    and updates the specified database table with the hotel data using raw SQL queries.
+
+    Args:
+        url (str): The API URL.
+        payload (str): The JSON payload for the API request.
+        headers (dict): The headers required for the API request.
+        engine (SQLAlchemy engine): The SQLAlchemy engine object connected to the database.
+        table_name (str): The name of the table to update in the database.
+    """
+    # Open a new database connection using the engine
+    with engine.connect() as connection:
+        try:
+            # Fetch data from the API
+            response = requests.post(url, headers=headers, data=payload)
+            
+            if response.status_code == 200:
+                data = response.json()
+                hotels = data.get('Hotels', [])
+                
+                # Iterate over each hotel and update the table
+                for hotel in hotels:
+                    provider_hotels = hotel.get('ProviderHotels', [])
+                    for provider_hotel in provider_hotels:
+                        # Extract required data
+                        hotel_name = provider_hotel.get('Name')
+                        city = provider_hotel.get('Contact', {}).get('Address', {}).get('City')
+                        country = provider_hotel.get('Contact', {}).get('Address', {}).get('Country')
+                        lat = provider_hotel.get('GeoCode', {}).get('Lat')
+                        long = provider_hotel.get('GeoCode', {}).get('Long')
+                        country_code = provider_hotel.get('Contact', {}).get('Address', {}).get('CountryCode')
+                        last_update = datetime.now()
+
+                        # Extract ProviderHotelId to update the correct row
+                        provider_hotel_id = provider_hotel.get('ProviderHotelId')
+                        
+                        # Create the raw SQL query for updating the table
+                        update_query = text(f"""
+                            UPDATE {table_name}
+                            SET 
+                                hotel_name = :hotel_name,
+                                hotel_city = :city,
+                                hotel_country = :country,
+                                hotel_latitude = :lat,
+                                hotel_longitude = :long,
+                                country_code = :country_code,
+                                last_update = :last_update
+                            WHERE ProviderHotelId = :provider_hotel_id
+                        """)
+                        
+                        # Execute the update query with bound parameters
+                        connection.execute(update_query, {
+                            'hotel_name': hotel_name,
+                            'city': city,
+                            'country': country,
+                            'lat': lat,
+                            'long': long,
+                            'country_code': country_code,
+                            'last_update': last_update,
+                            'provider_hotel_id': provider_hotel_id
+                        })
+                        print("Update sucessfully")
+            else:
+                print(f"Failed to fetch data. Status Code: {response.status_code}")
+        
+        except exc.SQLAlchemyError as e:
+            print(f"Database error occurred: {e}")
+        
+        except requests.exceptions.RequestException as e:
+            print(f"Request error occurred: {e}")
 

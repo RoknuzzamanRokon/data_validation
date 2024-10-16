@@ -46,11 +46,11 @@ if response.status_code == 200:
             print(f"hotel_city: {city}")
             country = provider_hotel.get('Contact', {}).get('Address',{}).get('Country')
             print(f"hotel_country: {country}")
-            countryCode = provider_hotel.get('Contact', {}).get('Address',{}).get('CountryCode')
-            print(f"country_code: {countryCode}")
+            
             lat = provider_hotel.get('GeoCode', {}).get('Lat')
             print(f"hotel_latitude: {lat}")
             long = provider_hotel.get('GeoCode', {}).get('Long')
             print(f"hotel_longitude: {long}")
-
+            countryCode = provider_hotel.get('Contact', {}).get('Address',{}).get('CountryCode')
+            print(f"country_code: {countryCode}")
 
