@@ -7,6 +7,24 @@ from api_requests.log_runner import log_run_time_update_mapping_local, log_run_t
 from api_requests.fetch_data_from_api import update_mapping_fetch_data, new_mapping_fetch_data, update_vervotech_mapping_data, save_json_file
 
 
+def get_new_mapping_data_process():
+    env_vars = load_environment_variables_local()
+    engine = get_database_engine(env_vars=env_vars)
+    table_name = "vervotech_hotel_map_new"
+
+    url = get_new_mapping_url()
+    params = get_new_mapping_params()
+    headers = get_new_mapping_headers(env_vars['vervotech_api_key'])
+
+    log_run_time_new_mapping_local(execution_date=params['lastUpdateDateTime'])
+
+    new_mapping_fetch_data(url, params, headers, engine, table_name)
+    print("Fetching and saving process completed.")
+
+    log_run_time_new_mapping_local(execution_date=params['lastUpdateDateTime'])
+
+    
+
 def get_update_mapping_data_process():
     # env_vars = load_environment_variables()
     env_vars = load_environment_variables_local()
@@ -28,20 +46,7 @@ def get_update_mapping_data_process():
     # print(log)
     print("Fetching and saving process completed.")
 
-
-def get_new_mapping_data_process():
-    env_vars = load_environment_variables_local()
-    engine = get_database_engine(env_vars=env_vars)
-    table_name = "vervotech_hotel_map_new"
-
-    url = get_new_mapping_url()
-    params = get_new_mapping_params()
-    headers = get_new_mapping_headers(env_vars['vervotech_api_key'])
-
-    log_run_time_new_mapping_local(execution_date=params['lastUpdateDateTime'])
-
-    new_mapping_fetch_data(url, params, headers, engine, table_name)
-    print("Fetching and saving process completed.")
+    log_run_time_update_mapping_local(execution_date=params['lastUpdateDateTime'])
 
 
 def update_vervotech_mapping_table():

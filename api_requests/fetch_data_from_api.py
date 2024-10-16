@@ -40,10 +40,12 @@ def save_data_to_db(data, engine, table_name):
                 log += f"Record with VervotechId {record.get('VervotechId')} inserted/updated successfully.\n"
             transaction.commit()
             log += "Transaction committed successfully.\n"
+            print(f"Vervotech {len(data)} data insert")
         except Exception as e:
             transaction.rollback()
             log += f"Transaction failed: {e}\n"
     return log
+
 
 def update_mapping_fetch_data(url, params, headers, engine, table_name):
     while True:
@@ -98,6 +100,7 @@ def new_mapping_fetch_data(url, params, headers, engine, table_name):
             if "ResumeKey" in response_data:
                 # print(f"Continuing to fetch data with ResumeKey: {response_data['ResumeKey']}")
                 save_data_to_db(new_data, engine, table_name)
+                print(f"vervotech {len(new_data)} data insert")
                 # Update the params to include the new ResumeKey for the next request
                 params['resumeKey'] = response_data["ResumeKey"]
             else:
@@ -220,6 +223,7 @@ def update_vervotech_mapping_data(engine):
 
 def save_json_file(engine):
     # Directory to save JSON files
+    # json_dir = "/var/www/hotelmap.gtrsystem.com"
     json_dir = "D:/data_validation/logs/json_file"
     os.makedirs(json_dir, exist_ok=True)  
 
