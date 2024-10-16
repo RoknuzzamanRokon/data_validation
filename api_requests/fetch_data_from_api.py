@@ -2,7 +2,7 @@ import requests
 import json
 import os
 from datetime import datetime
-from sqlalchemy import text, create_engine, exc
+from sqlalchemy import text, exc
 
 
 
@@ -108,8 +108,6 @@ def new_mapping_fetch_data(url, params, headers, engine, table_name):
             print("No data found in response.")
             break
 
-
-
 def update_vervotech_mapping_data(engine):
     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
 
@@ -120,27 +118,26 @@ def update_vervotech_mapping_data(engine):
     """)
 
     check_existing_record_stmt = text(f"""
-        SELECT COUNT(*) FROM vervotech_mapping
+        SELECT VervotechId, ProviderHotelId, ProviderFamily, ProviderLocationCode
+        FROM vervotech_mapping
         WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
-    """)
-
-    update_null_status_stmt = text(f"""
-        UPDATE vervotech_mapping
-        SET status = 'Update'
-        WHERE status IS NULL
     """)
 
     def update_mapping_from_table(table_name):
         update_status_skipping_stmt = text(f"""
             UPDATE {table_name}
             SET status = 'Skipping data'
-            WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
+            WHERE VervotechId = :VervotechId 
+            AND ProviderHotelId = :ProviderHotelId 
+            AND ProviderFamily = :ProviderFamily
         """)
 
         update_status_successful_stmt = text(f"""
             UPDATE {table_name}
             SET status = 'Update data successful'
-            WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
+            WHERE VervotechId = :VervotechId 
+            AND ProviderHotelId = :ProviderHotelId 
+            AND ProviderFamily = :ProviderFamily
         """)
 
         select_new_data_stmt = text(f"""
@@ -148,27 +145,50 @@ def update_vervotech_mapping_data(engine):
             WHERE status = 'new_data'
         """)
 
-        with engine.begin() as connection:  
+        with engine.begin() as connection:
             try:
                 # Fetch records with status 'new_data'
                 records = connection.execute(select_new_data_stmt).mappings().all()
 
                 for record in records:
-                    result = connection.execute(check_existing_record_stmt, {
+                    # Fetch the existing record from the database, using mappings() for dictionary-like access
+                    existing_record = connection.execute(check_existing_record_stmt, {
                         'VervotechId': record['VervotechId'],
                         'ProviderHotelId': record['ProviderHotelId'],
-                        'ProviderFamily': record['ProviderFamily']
-                    }).scalar()
+                        'ProviderFamily': record['ProviderFamily'],
+                    }).mappings().fetchone()
 
-                    if result > 0:
-                        print(f"Record with VervotechId {record['VervotechId']} and ProviderHotelId {record['ProviderHotelId']} already exists in vervotech_mapping. Skipping.")
-                        connection.execute(update_status_skipping_stmt, {
-                            'VervotechId': record['VervotechId'],
-                            'ProviderHotelId': record['ProviderHotelId'],
-                            'ProviderFamily': record['ProviderFamily']
-                        })
-                        print(f"Updated status to 'Skipping data' in table {table_name} for VervotechId {record['VervotechId']}.")
+                    if existing_record:
+                        # Compare if any of the key values (ProviderLocationCode) are different
+                        if record['ProviderLocationCode'] != existing_record['ProviderLocationCode']:
+                            print(f"Record with VervotechId {record['VervotechId']} has changed, updating.")
+                            connection.execute(insert_into_table_3_stmt, {
+                                'last_update': current_time,
+                                'VervotechId': record['VervotechId'],
+                                'UpdateDateFormat': record['UpdateDateFormat'] or None,
+                                'ProviderHotelId': record['ProviderHotelId'],
+                                'ProviderFamily': record['ProviderFamily'],
+                                'ModifiedOn': current_time,
+                                'ChannelIds': record['ChannelIds'] or None,
+                                'ProviderLocationCode': record['ProviderLocationCode'] or None,
+                                'status': 'Update'
+                            })
+
+                            # Update the source table status to 'Update data successful'
+                            connection.execute(update_status_successful_stmt, {
+                                'VervotechId': record['VervotechId'],
+                                'ProviderHotelId': record['ProviderHotelId'],
+                                'ProviderFamily': record['ProviderFamily']
+                            })
+                        else:
+                            print(f"Record with VervotechId {record['VervotechId']} already exists with no changes. Skipping.")
+                            connection.execute(update_status_skipping_stmt, {
+                                'VervotechId': record['VervotechId'],
+                                'ProviderHotelId': record['ProviderHotelId'],
+                                'ProviderFamily': record['ProviderFamily']
+                            })
                     else:
+                        print(f"Inserting new record with VervotechId {record['VervotechId']}.")
                         connection.execute(insert_into_table_3_stmt, {
                             'last_update': current_time,
                             'VervotechId': record['VervotechId'],
@@ -177,9 +197,9 @@ def update_vervotech_mapping_data(engine):
                             'ProviderFamily': record['ProviderFamily'],
                             'ModifiedOn': current_time,
                             'ChannelIds': record['ChannelIds'] or None,
-                            'ProviderLocationCode': record['ProviderLocationCode'] or None
+                            'ProviderLocationCode': record['ProviderLocationCode'] or None,
+                            'status': 'Update'
                         })
-                        print(f"Inserted record with VervotechId {record['VervotechId']} into vervotech_mapping (status: 'Update').")
 
                         # Update the source table status to 'Update data successful'
                         connection.execute(update_status_successful_stmt, {
@@ -187,8 +207,7 @@ def update_vervotech_mapping_data(engine):
                             'ProviderHotelId': record['ProviderHotelId'],
                             'ProviderFamily': record['ProviderFamily']
                         })
-                        print(f"Updated status to 'Update data successful' in table {table_name} for VervotechId {record['VervotechId']}.")
-            
+
             except exc.SQLAlchemyError as e:
                 print(f"Error occurred during database operation: {e}")
                 raise
@@ -196,11 +215,6 @@ def update_vervotech_mapping_data(engine):
     # Process updates from both tables
     update_mapping_from_table('vervotech_hotel_map_new')
     update_mapping_from_table('vervotech_hotel_map_update')
-
-    with engine.begin() as connection:
-        connection.execute(update_null_status_stmt)
-        print("Updated existing NULL statuses in vervotech_mapping to 'Update'.")
-
 
 
 

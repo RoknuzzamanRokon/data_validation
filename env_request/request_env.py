@@ -27,7 +27,7 @@ def load_environment_variables_local():
         'db_name': os.getenv('DB_NAME'),
         'vervotech_api_key': os.getenv('VERVOTECH_API_KEY')
     }
-    # print(env_vars) 
+    print(env_vars) 
     return env_vars
 
 
