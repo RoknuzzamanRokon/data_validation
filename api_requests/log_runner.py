@@ -47,3 +47,25 @@ def log_run_time_new_mapping_local(execution_date):
 #     log_file_path = os.path.join('/var/www/VerVotech-Contents-Mapping/logFile', 'update_mapping_date_scheduler_runTime.txt')
 #     with open(log_file_path, 'a') as log_file:
 #         log_file.write(f"Running date:- {formatted_time} collect data from: {execution_date} time.\n")
+
+
+
+def run_time_check(string_value):
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%I:%M %p %m/%d/%Y")
+
+    server_directory = '/var/www/VerVotech-Contents-Mapping/data_validation/logs'
+    log_directory = 'D:/data_validation/logs'
+
+    directory = log_directory
+    log_file_path = os.path.join(directory, 'update_content_check_runTime.txt')
+
+    # Check if the directory exists, if not, create it
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+        print(f"Directory {directory} created.")
+
+    # Write log data
+    with open(log_file_path, 'a') as log_file:
+        log_file.write(f"{string_value}-------- Running Program datetime:- {formatted_time}.\n")
+    print(f"Log written to {log_file_path}")

@@ -3,6 +3,9 @@ import json
 import os
 from datetime import datetime
 from sqlalchemy import text, exc
+from api_call.payload import get_content_by_provider_hotel_ids_create_payload
+from api_call.headers import get_content_by_provider_hotel_ids_headers
+from env_request.request_env import load_environment_variables_local
 
 
 
@@ -223,9 +226,24 @@ def update_vervotech_mapping_data(engine):
 
 
 def save_json_file(engine):
+    """
+        Fetches mapping data from the database and saves it as JSON files, with each file 
+        named after the `VervotechId`. If a file already exists for a particular `VervotechId`,
+        the function appends new unique entries to avoid duplicates.
+
+        Parameters:
+        - engine: SQLAlchemy engine object for database connection.
+        
+        The function does the following:
+        1. Fetches data from the `vervotech_mapping` table, retrieving `VervotechId`, 
+        `ProviderHotelId`, `ProviderFamily`, and `ProviderLocationCode`.
+        2. Groups data by `VervotechId` and saves the data to a JSON file in the specified directory.
+        3. If a file for a `VervotechId` already exists, it appends new unique entries to the file.
+    """
+
     # Directory to save JSON files
-    # json_dir = "/var/www/hotelmap.gtrsystem.com"
-    json_dir = "D:/data_validation/logs/json_file"
+    json_dir = "/var/www/hotelmap.gtrsystem.com"
+    # json_dir = "D:/data_validation/logs/json_file"
     os.makedirs(json_dir, exist_ok=True)  
 
     fetch_data_stmt = text("""
@@ -277,11 +295,60 @@ def save_json_file(engine):
             print(f"Saved data for VervotechId {vervotech_id} to {json_file_path}")
 
 
-
-
-
-def update_with_provider_hotel_ids(url, payload, headers, engine, table_name):
+def update_hotel_mapping_with_content(url, engine, table_name):
     """
+    Updates all rows in the table where content_update_status is not 'Done'.
+    For each row, it fetches the data from the API and updates the table with hotel details.
+    
+    Args:
+        url (str): The API URL.
+        headers (dict): The headers required for the API request.
+        engine (SQLAlchemy engine): The SQLAlchemy engine object connected to the database.
+        table_name (str): The name of the table to update in the database.
+    """
+    all_successful = True
+    with engine.connect() as connection:
+        try:
+            select_query = text(f"""
+                SELECT Id, ProviderHotelId, ProviderFamily 
+                FROM {table_name} 
+                WHERE content_update_status IS NULL OR content_update_status != 'Done'
+            """)
+            result = connection.execute(select_query)
+            rows = result.fetchall()  # Fetch all rows at once
+
+            # Check if any rows were returned
+            if not rows:
+                print("No records found where content_update_status is not 'Done'.")
+                return  # Exit the function if no rows are found
+
+            for row in rows:
+                record_id, provider_hotel_id, provider_family = row  # Unpack the tuple
+
+                payload = get_content_by_provider_hotel_ids_create_payload(provider_hotel_id=provider_hotel_id, provider_family=provider_family)
+
+                # Update the hotel data and check for success
+                success = update_with_provider_hotel_ids(url, payload, engine, table_name, record_id)
+
+                if not success:
+                    all_successful = False
+                    print(f"Failed to update content for record {record_id}")
+
+                print(f"Update: ------------------------ {record_id}")
+
+            if all_successful:
+                print("All update content successfully done")
+
+        except exc.SQLAlchemyError as e:
+            print(f"Database error occurred: {e}")
+
+        except requests.exceptions.RequestException as e:
+            print(f"Request error occurred: {e}")
+
+
+
+def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
+    """ 
     Fetches data from the API using the provided URL, payload, and headers, 
     and updates the specified database table with the hotel data using raw SQL queries.
 
@@ -291,10 +358,15 @@ def update_with_provider_hotel_ids(url, payload, headers, engine, table_name):
         headers (dict): The headers required for the API request.
         engine (SQLAlchemy engine): The SQLAlchemy engine object connected to the database.
         table_name (str): The name of the table to update in the database.
+        record_id (int): The record Id to update in the database.
     """
     # Open a new database connection using the engine
     with engine.connect() as connection:
+        trans = connection.begin()
         try:
+            env_vars = load_environment_variables_local()
+            api_key = env_vars['vervotech_api_key']
+            headers = get_content_by_provider_hotel_ids_headers(api_key) 
             # Fetch data from the API
             response = requests.post(url, headers=headers, data=payload)
             
@@ -314,6 +386,7 @@ def update_with_provider_hotel_ids(url, payload, headers, engine, table_name):
                         long = provider_hotel.get('GeoCode', {}).get('Long')
                         country_code = provider_hotel.get('Contact', {}).get('Address', {}).get('CountryCode')
                         last_update = datetime.now()
+                        content_update_status = 'Done'
 
                         # Extract ProviderHotelId to update the correct row
                         provider_hotel_id = provider_hotel.get('ProviderHotelId')
@@ -328,8 +401,9 @@ def update_with_provider_hotel_ids(url, payload, headers, engine, table_name):
                                 hotel_latitude = :lat,
                                 hotel_longitude = :long,
                                 country_code = :country_code,
-                                last_update = :last_update
-                            WHERE ProviderHotelId = :provider_hotel_id
+                                last_update = :last_update,
+                                content_update_status = :content_update_status
+                            WHERE Id = :record_id
                         """)
                         
                         # Execute the update query with bound parameters
@@ -341,15 +415,29 @@ def update_with_provider_hotel_ids(url, payload, headers, engine, table_name):
                             'long': long,
                             'country_code': country_code,
                             'last_update': last_update,
-                            'provider_hotel_id': provider_hotel_id
+                            'content_update_status': content_update_status,
+                            'record_id': record_id
                         })
-                        print("Update sucessfully")
+                        print(f"Update sucessfully this provider hotel Id {provider_hotel_id}")
+                trans.commit()
+                return True
             else:
-                print(f"Failed to fetch data. Status Code: {response.status_code}")
+                print(f"Failed to fetch data for record {record_id}. Status Code: {response.status_code}")
+                return False
         
         except exc.SQLAlchemyError as e:
+            trans.rollback()
             print(f"Database error occurred: {e}")
+            return False
         
         except requests.exceptions.RequestException as e:
+            trans.rollback()
             print(f"Request error occurred: {e}")
+            return False
+
+
+
+
+
+
 
