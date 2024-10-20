@@ -165,8 +165,11 @@ def update_vervotech_mapping_data(engine):
                     }).mappings().fetchone()
 
                     if existing_record:
-                        # Compare if any of the key values (ProviderLocationCode) are different
-                        if record['ProviderLocationCode'] != existing_record['ProviderLocationCode']:
+                        # Check if any of the key fields have changed
+                        if (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
+                            record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
+                            record['ProviderFamily'] != existing_record['ProviderFamily']):
+                            
                             print(f"Record with VervotechId {record['VervotechId']} has changed, updating.")
                             connection.execute(insert_into_table_3_stmt, {
                                 'last_update': current_time,
@@ -222,77 +225,6 @@ def update_vervotech_mapping_data(engine):
     update_mapping_from_table('vervotech_hotel_map_new')
     update_mapping_from_table('vervotech_hotel_map_update')
 
-
-
-
-def save_json_file(engine):
-    """
-        Fetches mapping data from the database and saves it as JSON files, with each file 
-        named after the `VervotechId`. If a file already exists for a particular `VervotechId`,
-        the function appends new unique entries to avoid duplicates.
-
-        Parameters:
-        - engine: SQLAlchemy engine object for database connection.
-        
-        The function does the following:
-        1. Fetches data from the `vervotech_mapping` table, retrieving `VervotechId`, 
-        `ProviderHotelId`, `ProviderFamily`, and `ProviderLocationCode`.
-        2. Groups data by `VervotechId` and saves the data to a JSON file in the specified directory.
-        3. If a file for a `VervotechId` already exists, it appends new unique entries to the file.
-    """
-
-    # Directory to save JSON files
-    json_dir = "/var/www/hotelmap.gtrsystem.com"
-    # json_dir = "D:/data_validation/logs/json_file"
-    os.makedirs(json_dir, exist_ok=True)  
-
-    fetch_data_stmt = text("""
-        SELECT VervotechId, ProviderHotelId, ProviderFamily, ProviderLocationCode 
-        FROM vervotech_mapping
-    """)
-
-    with engine.connect() as connection:
-        records = connection.execute(fetch_data_stmt).mappings().all()
-
-        # Prepare a dictionary to hold data grouped by VervotechId
-        data_to_save = {}
-
-        for record in records:
-            vervotech_id = record['VervotechId']
-            if vervotech_id not in data_to_save:
-                data_to_save[vervotech_id] = []
-            data_to_save[vervotech_id].append({
-                'VervotechId': record['VervotechId'],
-                'ProviderHotelId': record['ProviderHotelId'],
-                'ProviderFamily': record['ProviderFamily'],
-                'ProviderLocationCode': record['ProviderLocationCode']
-            })
-
-        for vervotech_id, entries in data_to_save.items():
-            json_file_path = os.path.join(json_dir, f"{vervotech_id}.json")
-            
-            # If the file already exists, load its content and update
-            if os.path.exists(json_file_path):
-                with open(json_file_path, 'r') as json_file:
-                    existing_data = json.load(json_file)
-                
-                # Create a set for existing unique identifiers to avoid duplicates
-                existing_set = {(entry['ProviderHotelId'], entry['ProviderFamily'], entry['ProviderLocationCode']) for entry in existing_data}
-                
-                # Filter out entries that already exist
-                new_entries = [
-                    entry for entry in entries
-                    if (entry['ProviderHotelId'], entry['ProviderFamily'], entry['ProviderLocationCode']) not in existing_set
-                ]
-                
-                # Update existing data with new unique entries
-                existing_data.extend(new_entries)
-                entries = existing_data
-
-            # Save the updated entries back to the JSON file
-            with open(json_file_path, 'w') as json_file:
-                json.dump(entries, json_file, indent=4)
-            print(f"Saved data for VervotechId {vervotech_id} to {json_file_path}")
 
 
 def update_hotel_mapping_with_content(url, engine, table_name):
