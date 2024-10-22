@@ -311,14 +311,14 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
                     provider_hotels = hotel.get('ProviderHotels', [])
                     for provider_hotel in provider_hotels:
                         # Extract required data
-                        hotel_name = provider_hotel.get('Name')
-                        city = provider_hotel.get('Contact', {}).get('Address', {}).get('City')
-                        country = provider_hotel.get('Contact', {}).get('Address', {}).get('Country')
+                        hotel_name = provider_hotel.get('Name', None)
+                        city = provider_hotel.get('Contact', {}).get('Address', {}).get('City', None)
+                        country = provider_hotel.get('Contact', {}).get('Address', {}).get('Country', None)
 
                         geo_code = provider_hotel.get('GeoCode', {})
-                        lat = geo_code.get('GeoCode', {}).get('Lat')
-                        long = geo_code.get('GeoCode', {}).get('Long')
-                        country_code = provider_hotel.get('Contact', {}).get('Address', {}).get('CountryCode')
+                        lat = geo_code.get('Lat') if geo_code else None
+                        long = geo_code.get('Long') if geo_code else None
+                        country_code = provider_hotel.get('Contact', {}).get('Address', {}).get('CountryCode', None)
                         last_update = datetime.now()
                         content_update_status = 'Done'
 
@@ -353,7 +353,7 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
                             'record_id': record_id
                         })
                         print(f"Update successfully  this provider hotel Id {provider_hotel_id}")
-                trans.commit()
+                        trans.commit()
                 return True
             else:
                 print(f"Failed to fetch data for record {record_id}. Status Code: {response.status_code}")
