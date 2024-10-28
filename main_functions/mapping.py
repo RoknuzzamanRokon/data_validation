@@ -43,7 +43,7 @@ def get_update_mapping_data_process():
     headers = get_update_mapping_headers(env_vars['vervotech_api_key'])
     # print(headers)
     log_run_time_update_mapping_local(execution_date=params['lastUpdateDateTime'])
-    log = update_mapping_fetch_data(url, params, headers, engine, table_name)
+    update_mapping_fetch_data(url, params, headers, engine, table_name)
     # print(log)
     print("Fetching and saving process completed.")
 

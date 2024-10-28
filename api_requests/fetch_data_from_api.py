@@ -52,29 +52,35 @@ def save_data_to_db(data, engine, table_name):
 
 def update_mapping_fetch_data(url, params, headers, engine, table_name):
     while True:
-        response = requests.get(url, headers=headers, params=params)
+        response = requests.get(url, params=params, headers=headers)
+        
         if response.status_code != 200:
-            f"Error: Received status code {response.status_code}\n"
-            f"Response: {response.text}\n"
+            print(f"Error: Received status code {response.status_code}")
+            print(f"Response: {response.text}")
             break
-
+        
         try:
             response_data = response.json()
+            # print("Response data:", response_data) 
         except ValueError as e:
-            f"JSON decode error: {e}\n"
-            f"Response content: {response.text}\n"
+            print(f"JSON decode error: {e}")
+            print(f"Response content: {response.text}")
             break
-
+        
         if 'Mappings' in response_data and response_data['Mappings']:
             new_data = response_data['Mappings']
-            if "ResumeKey" in response_data:
-                save_data_to_db(new_data, engine, table_name)
+            # print("New data:", new_data)  # Debug: Print new data to be saved
+            
+            save_data_to_db(new_data, engine, table_name)
+            
+            if "ResumeKey" in response_data and response_data["ResumeKey"] is not None:
                 params['resumeKey'] = response_data["ResumeKey"]
+                # print(f"Continuing with ResumeKey: {response_data['ResumeKey']}")  
             else:
-                "No more ResumeKey found. Fetching complete.\n"
+                print("No ResumeKey found or ResumeKey is None. Fetching complete.")
                 break
         else:
-            "No data found in response.\n"
+            print("No data found in 'Mappings'.")
             break
 
 
@@ -278,6 +284,75 @@ def update_hotel_mapping_with_content(url, engine, table_name):
             print(f"Request error occurred: {e}")
 
 
+def save_json_file(engine):
+    """
+        Fetches mapping data from the database and saves it as JSON files, with each file
+        named after the `VervotechId`. If a file already exists for a particular `VervotechId`,
+        the function appends new unique entries to avoid duplicates.
+
+        Parameters:
+        - engine: SQLAlchemy engine object for database connection.
+
+        The function does the following:
+        1. Fetches data from the `vervotech_mapping` table, retrieving `VervotechId`,
+        `ProviderHotelId`, `ProviderFamily`, and `ProviderLocationCode`.
+        2. Groups data by `VervotechId` and saves the data to a JSON file in the specified directory.
+        3. If a file for a `VervotechId` already exists, it appends new unique entries to the file.
+    """
+
+    # Directory to save JSON files
+    # json_dir = "/var/www/hotelmap.gtrsystem.com"
+    json_dir = "D:/data_validation/logs/json_file"
+    os.makedirs(json_dir, exist_ok=True)
+
+    fetch_data_stmt = text("""
+        SELECT VervotechId, ProviderHotelId, ProviderFamily, ProviderLocationCode
+        FROM vervotech_mapping
+    """)
+
+    with engine.connect() as connection:
+        records = connection.execute(fetch_data_stmt).mappings().all()
+
+        # Prepare a dictionary to hold data grouped by VervotechId
+        data_to_save = {}
+
+        for record in records:
+            vervotech_id = record['VervotechId']
+            if vervotech_id not in data_to_save:
+                data_to_save[vervotech_id] = []
+            data_to_save[vervotech_id].append({
+                'VervotechId': record['VervotechId'],
+                'ProviderHotelId': record['ProviderHotelId'],
+                'ProviderFamily': record['ProviderFamily'],
+                'ProviderLocationCode': record['ProviderLocationCode']
+            })
+
+        for vervotech_id, entries in data_to_save.items():
+            json_file_path = os.path.join(json_dir, f"{vervotech_id}.json")
+
+            # If the file already exists, load its content and update
+            if os.path.exists(json_file_path):
+                with open(json_file_path, 'r') as json_file:
+                    existing_data = json.load(json_file)
+
+                # Create a set for existing unique identifiers to avoid duplicates
+                existing_set = {(entry['ProviderHotelId'], entry['ProviderFamily'], entry['ProviderLocationCode']) for entry in existing_data}
+
+                # Filter out entries that already exist
+                new_entries = [
+                    entry for entry in entries
+                    if (entry['ProviderHotelId'], entry['ProviderFamily'], entry['ProviderLocationCode']) not in existing_set
+                ]
+
+                # Update existing data with new unique entries
+                existing_data.extend(new_entries)
+                entries = existing_data
+
+            # Save the updated entries back to the JSON file
+            with open(json_file_path, 'w') as json_file:
+                json.dump(entries, json_file, indent=4)
+            print(f"Saved data for VervotechId {vervotech_id} to {json_file_path}")
+
 
 def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
     """ 
@@ -368,10 +443,4 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
             trans.rollback()
             print(f"Request error occurred: {e}")
             return False
-
-
-
-
-
-
 
