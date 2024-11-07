@@ -6,7 +6,7 @@ from database.db_connection import get_database_engine
 from api_requests.log_runner import log_run_time_update_mapping_local, log_run_time_new_mapping_local, run_time_check
 from api_requests.fetch_data_from_api import update_mapping_fetch_data, new_mapping_fetch_data, update_vervotech_mapping_data, save_json_file, update_hotel_mapping_with_content
 
-
+from api_requests.fetch_data_from_database import get_provider_family_active_list
 
 def get_new_mapping_data_process():
     env_vars = load_environment_variables_local()
@@ -14,14 +14,26 @@ def get_new_mapping_data_process():
     table_name = "vervotech_hotel_map_new"
 
     url = get_new_mapping_url()
-    params = get_new_mapping_params()
-    headers = get_new_mapping_headers(env_vars['vervotech_api_key'])
 
-    log_run_time_new_mapping_local(execution_date=params['lastUpdateDateTime'])
+    families = get_provider_family_active_list(table='vervotech_ProviderFamily', engine=engine)
 
-    new_mapping_fetch_data(url, params, headers, engine, table_name)
-    print("Fetching and saving process completed.")
+    # families = ['HotelBeds', 'EAN', 'MGHoliday', 'Agoda', 'DOTW', 'Restel']
 
+
+    for family in families:
+        print(f"Checking provider family: {family}")
+        params = get_new_mapping_params(family)
+        print(params)
+
+        headers = get_new_mapping_headers(env_vars['vervotech_api_key'])
+
+        log_run_time_new_mapping_local(execution_date=params['lastUpdateDateTime'])
+        try:
+
+            new_mapping_fetch_data(url, params, headers, engine, table_name)
+            print(f"Data fetching and saving completed for provider family: {family}")
+        except Exception as e:
+            print(f"Error occurred with provider family {family}: {e}")
     log_run_time_new_mapping_local(execution_date=params['lastUpdateDateTime'])
 
     
@@ -37,17 +49,29 @@ def get_update_mapping_data_process():
 
     url = get_update_mapping_url()
     # print(url)
-    params = get_update_mapping_params()
-    # print(params)
 
-    headers = get_update_mapping_headers(env_vars['vervotech_api_key'])
-    # print(headers)
-    log_run_time_update_mapping_local(execution_date=params['lastUpdateDateTime'])
-    update_mapping_fetch_data(url, params, headers, engine, table_name)
-    # print(log)
-    print("Fetching and saving process completed.")
+    families = get_provider_family_active_list(table='vervotech_ProviderFamily', engine=engine)
 
-    log_run_time_update_mapping_local(execution_date=params['lastUpdateDateTime'])
+    # families = ['HotelBeds', 'EAN', 'MGHoliday', 'Agoda', 'DOTW', 'Restel']
+
+    for family in families:
+        print(f"Checking provider family: {family}")
+        params = get_update_mapping_params(family)
+        # print(params)
+
+        headers = get_update_mapping_headers(env_vars['vervotech_api_key'])
+        # print(headers)
+        log_run_time_update_mapping_local(execution_date=params['lastUpdateDateTime'])
+        try:
+    
+            update_mapping_fetch_data(url, params, headers, engine, table_name)
+            print(f"Data fetching and saving completed for provider family: {family}")
+        except Exception as e:
+            print(f"Error occurred with provider family {family}: {e}")
+
+        # Log after the data fetching process
+        log_run_time_update_mapping_local(execution_date=params['lastUpdateDateTime'])
+
 
 
 def update_vervotech_mapping_table():

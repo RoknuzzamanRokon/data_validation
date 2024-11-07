@@ -8,7 +8,6 @@ from api_call.headers import get_content_by_provider_hotel_ids_headers
 from env_request.request_env import load_environment_variables_local
 
 
-
 def save_data_to_db(data, engine, table_name):
     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
     log = ""

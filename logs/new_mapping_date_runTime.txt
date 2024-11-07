@@ -12,3 +12,7 @@ Running date:- 12:11 PM 10/28/2024 collect data from: 2024-10-27T06:11:39Z time.
 Running date:- 12:11 PM 10/28/2024 collect data from: 2024-10-27T06:11:39Z time.
 Running date:- 12:17 PM 10/28/2024 collect data from: 2024-10-27T06:17:07Z time.
 Running date:- 12:17 PM 10/28/2024 collect data from: 2024-10-27T06:17:07Z time.
+Running date:- 11:52 AM 11/07/2024 collect data from: 2024-11-06T05:52:14Z time.
+Running date:- 11:52 AM 11/07/2024 collect data from: 2024-11-06T05:52:15Z time.
+Running date:- 11:52 AM 11/07/2024 collect data from: 2024-11-06T05:52:18Z time.
+Running date:- 11:52 AM 11/07/2024 collect data from: 2024-11-06T05:52:52Z time.
