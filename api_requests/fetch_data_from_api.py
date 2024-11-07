@@ -159,7 +159,7 @@ def update_vervotech_mapping_data(engine):
         with engine.begin() as connection: 
             try:
                 result = connection.execute(select_new_data_stmt)
-                records = result.fetchall() 
+                records = result.mappings().all()
 
                 if not records:
                     print(f"No new records found in {table_name}.")
@@ -170,7 +170,7 @@ def update_vervotech_mapping_data(engine):
                         'ProviderHotelId': record['ProviderHotelId'],
                         'ProviderFamily': record['ProviderFamily'],
                     })
-                    existing_record = existing_record_result.fetchone()
+                    existing_record = existing_record_result.mappings().first()
 
                     if existing_record:
                         if (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
