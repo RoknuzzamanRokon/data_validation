@@ -29,7 +29,7 @@ def save_data_to_db(data, engine, table_name):
         transaction = connection.begin()
         try:
             for record in data:
-                connection.execute(insert_stmt, {
+                connection.begin(insert_stmt, {
                     'last_update': current_time,
                     'VervotechId': record.get('VervotechId'),
                     'UpdateDateFormat': record.get('UpdateDateFormat') or None,
@@ -109,7 +109,6 @@ def new_mapping_fetch_data(url, params, headers, engine, table_name):
                 # print(f"Continuing to fetch data with ResumeKey: {response_data['ResumeKey']}")
                 save_data_to_db(new_data, engine, table_name)
                 print(f"vervotech {len(new_data)} data insert")
-                # Update the params to include the new ResumeKey for the next request
                 params['resumeKey'] = response_data["ResumeKey"]
             else:
                 # If no ResumeKey, end the loop
@@ -118,6 +117,7 @@ def new_mapping_fetch_data(url, params, headers, engine, table_name):
         else:
             print("No data found in response.")
             break
+
 
 def update_vervotech_mapping_data(engine):
     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
@@ -156,26 +156,28 @@ def update_vervotech_mapping_data(engine):
             WHERE status = 'new_data'
         """)
 
-        with engine.begin() as connection:
+        with engine.begin() as connection: 
             try:
-                # Fetch records with status 'new_data'
-                records = connection.execute(select_new_data_stmt).mappings().all()
+                result = connection.execute(select_new_data_stmt)
+                records = result.fetchall() 
 
+                if not records:
+                    print(f"No new records found in {table_name}.")
+                    return  
                 for record in records:
-                    # Fetch the existing record from the database, using mappings() for dictionary-like access
-                    existing_record = connection.execute(check_existing_record_stmt, {
+                    existing_record_result = connection.execute(check_existing_record_stmt, {
                         'VervotechId': record['VervotechId'],
                         'ProviderHotelId': record['ProviderHotelId'],
                         'ProviderFamily': record['ProviderFamily'],
-                    }).mappings().fetchone()
+                    })
+                    existing_record = existing_record_result.fetchone()
 
                     if existing_record:
-                        # Check if any of the key fields have changed
                         if (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
-                            record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
-                            record['ProviderFamily'] != existing_record['ProviderFamily']):
-                            
+                                record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
+                                record['ProviderFamily'] != existing_record['ProviderFamily']):
                             print(f"Record with VervotechId {record['VervotechId']} has changed, updating.")
+                            
                             connection.execute(insert_into_table_3_stmt, {
                                 'last_update': current_time,
                                 'VervotechId': record['VervotechId'],
@@ -188,7 +190,6 @@ def update_vervotech_mapping_data(engine):
                                 'status': 'Update'
                             })
 
-                            # Update the source table status to 'Update data successful'
                             connection.execute(update_status_successful_stmt, {
                                 'VervotechId': record['VervotechId'],
                                 'ProviderHotelId': record['ProviderHotelId'],
@@ -215,7 +216,6 @@ def update_vervotech_mapping_data(engine):
                             'status': 'Update'
                         })
 
-                        # Update the source table status to 'Update data successful'
                         connection.execute(update_status_successful_stmt, {
                             'VervotechId': record['VervotechId'],
                             'ProviderHotelId': record['ProviderHotelId'],
@@ -224,9 +224,8 @@ def update_vervotech_mapping_data(engine):
 
             except exc.SQLAlchemyError as e:
                 print(f"Error occurred during database operation: {e}")
-                raise
+                raise  # Will automatically rollback on error
 
-    # Process updates from both tables
     update_mapping_from_table('vervotech_hotel_map_new')
     update_mapping_from_table('vervotech_hotel_map_update')
 
@@ -236,12 +235,6 @@ def update_hotel_mapping_with_content(url, engine, table_name):
     """
     Updates all rows in the table where content_update_status is not 'Done'.
     For each row, it fetches the data from the API and updates the table with hotel details.
-    
-    Args:
-        url (str): The API URL.
-        headers (dict): The headers required for the API request.
-        engine (SQLAlchemy engine): The SQLAlchemy engine object connected to the database.
-        table_name (str): The name of the table to update in the database.
     """
     all_successful = True
     with engine.connect() as connection:
@@ -252,7 +245,7 @@ def update_hotel_mapping_with_content(url, engine, table_name):
                 WHERE content_update_status IS NULL OR content_update_status != 'Done'
             """)
             result = connection.execute(select_query)
-            rows = result.fetchall()  # Fetch all rows at once
+            rows = result.fetchall() 
 
             # Check if any rows were returned
             if not rows:
@@ -285,23 +278,14 @@ def update_hotel_mapping_with_content(url, engine, table_name):
 
 def save_json_file(engine):
     """
-        Fetches mapping data from the database and saves it as JSON files, with each file
-        named after the `VervotechId`. If a file already exists for a particular `VervotechId`,
-        the function appends new unique entries to avoid duplicates.
-
-        Parameters:
-        - engine: SQLAlchemy engine object for database connection.
-
-        The function does the following:
-        1. Fetches data from the `vervotech_mapping` table, retrieving `VervotechId`,
-        `ProviderHotelId`, `ProviderFamily`, and `ProviderLocationCode`.
-        2. Groups data by `VervotechId` and saves the data to a JSON file in the specified directory.
-        3. If a file for a `VervotechId` already exists, it appends new unique entries to the file.
+    Fetches mapping data from the database and saves it as JSON files, with each file
+    named after the `VervotechId`. If a file already exists for a particular `VervotechId`,
+    the function appends new unique entries to avoid duplicates.
     """
 
     # Directory to save JSON files
-    # json_dir = "/var/www/hotelmap.gtrsystem.com"
-    json_dir = "D:/data_validation/logs/json_file"
+    json_dir = "/var/www/hotelmap.gtrsystem.com"
+    # json_dir = "D:/data_validation/logs/json_file"
     os.makedirs(json_dir, exist_ok=True)
 
     fetch_data_stmt = text("""
@@ -310,9 +294,8 @@ def save_json_file(engine):
     """)
 
     with engine.connect() as connection:
-        records = connection.execute(fetch_data_stmt).mappings().all()
+        records = connection.execute(fetch_data_stmt).fetchall()
 
-        # Prepare a dictionary to hold data grouped by VervotechId
         data_to_save = {}
 
         for record in records:
@@ -329,27 +312,24 @@ def save_json_file(engine):
         for vervotech_id, entries in data_to_save.items():
             json_file_path = os.path.join(json_dir, f"{vervotech_id}.json")
 
-            # If the file already exists, load its content and update
             if os.path.exists(json_file_path):
                 with open(json_file_path, 'r') as json_file:
                     existing_data = json.load(json_file)
 
-                # Create a set for existing unique identifiers to avoid duplicates
                 existing_set = {(entry['ProviderHotelId'], entry['ProviderFamily'], entry['ProviderLocationCode']) for entry in existing_data}
 
-                # Filter out entries that already exist
                 new_entries = [
                     entry for entry in entries
                     if (entry['ProviderHotelId'], entry['ProviderFamily'], entry['ProviderLocationCode']) not in existing_set
                 ]
 
-                # Update existing data with new unique entries
                 existing_data.extend(new_entries)
                 entries = existing_data
 
             # Save the updated entries back to the JSON file
             with open(json_file_path, 'w') as json_file:
                 json.dump(entries, json_file, indent=4)
+
             print(f"Saved data for VervotechId {vervotech_id} to {json_file_path}")
 
 
@@ -357,46 +337,39 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
     """ 
     Fetches data from the API using the provided URL, payload, and headers, 
     and updates the specified database table with the hotel data using raw SQL queries.
-
-    Args:
-        url (str): The API URL.
-        payload (str): The JSON payload for the API request.
-        headers (dict): The headers required for the API request.
-        engine (SQLAlchemy engine): The SQLAlchemy engine object connected to the database.
-        table_name (str): The name of the table to update in the database.
-        record_id (int): The record Id to update in the database.
     """
-    # Open a new database connection using the engine
     with engine.connect() as connection:
-        trans = connection.begin()
         try:
             env_vars = load_environment_variables_local()
             api_key = env_vars['vervotech_api_key']
             headers = get_content_by_provider_hotel_ids_headers(api_key) 
-            # Fetch data from the API
+            
             response = requests.post(url, headers=headers, data=payload)
             
             if response.status_code == 200:
-                data = response.json()
+                try:
+                    data = response.json()
+                except ValueError:
+                    print(f"Failed to parse JSON for record {record_id}")
+                    return False
+                
                 hotels = data.get('Hotels', [])
                 
-                # Iterate over each hotel and update the table
                 for hotel in hotels:
                     provider_hotels = hotel.get('ProviderHotels', [])
                     for provider_hotel in provider_hotels:
                         # Extract required data
-                        hotel_name = provider_hotel.get('Name', None)
-                        city = provider_hotel.get('Contact', {}).get('Address', {}).get('City', None)
-                        country = provider_hotel.get('Contact', {}).get('Address', {}).get('Country', None)
+                        hotel_name = provider_hotel.get('Name')
+                        city = provider_hotel.get('Contact', {}).get('Address', {}).get('City', 'Unknown')
+                        country = provider_hotel.get('Contact', {}).get('Address', {}).get('Country', 'Unknown')
 
                         geo_code = provider_hotel.get('GeoCode', {})
                         lat = geo_code.get('Lat') if geo_code else None
                         long = geo_code.get('Long') if geo_code else None
-                        country_code = provider_hotel.get('Contact', {}).get('Address', {}).get('CountryCode', None)
+                        country_code = provider_hotel.get('Contact', {}).get('Address', {}).get('CountryCode', 'Unknown')
                         last_update = datetime.now()
                         content_update_status = 'Done'
 
-                        # Extract ProviderHotelId to update the correct row
                         provider_hotel_id = provider_hotel.get('ProviderHotelId')
                         
                         # Create the raw SQL query for updating the table
@@ -413,8 +386,8 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
                                 content_update_status = :content_update_status
                             WHERE Id = :record_id
                         """)
-                        
-                        # Execute the update query with bound parameters
+
+                        # Execute the update query within the transaction
                         connection.execute(update_query, {
                             'hotel_name': hotel_name,
                             'city': city,
@@ -426,20 +399,18 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
                             'content_update_status': content_update_status,
                             'record_id': record_id
                         })
-                        print(f"Update successfully  this provider hotel Id {provider_hotel_id}")
-                        trans.commit()
+                        print(f"Update successfully for provider hotel Id {provider_hotel_id}")
+
                 return True
             else:
                 print(f"Failed to fetch data for record {record_id}. Status Code: {response.status_code}")
                 return False
         
         except exc.SQLAlchemyError as e:
-            trans.rollback()
             print(f"Database error occurred: {e}")
             return False
         
         except requests.exceptions.RequestException as e:
-            trans.rollback()
             print(f"Request error occurred: {e}")
             return False
 
