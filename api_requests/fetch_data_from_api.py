@@ -12,12 +12,11 @@ def save_data_to_db(data, engine, table_name):
     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
     log = ""
     insert_stmt = text(f"""
-        INSERT INTO {table_name} (last_update, VervotechId, UpdateDateFormat, ProviderHotelId, ProviderFamily, ChannelIds, ProviderLocationCode, status)
-        VALUES (:last_update, :VervotechId, :UpdateDateFormat, :ProviderHotelId,  :ProviderFamily, :ChannelIds, :ProviderLocationCode, :status)
+        INSERT INTO {table_name} (last_update, VervotechId, ProviderHotelId, ProviderFamily, ChannelIds, ProviderLocationCode, status)
+        VALUES (:last_update, :VervotechId, :ProviderHotelId,  :ProviderFamily, :ChannelIds, :ProviderLocationCode, :status)
         ON DUPLICATE KEY UPDATE
             last_update = :last_update,
             VervotechId = :VervotechId,
-            UpdateDateFormat = :UpdateDateFormat,
             ProviderHotelId = :ProviderHotelId,
             ProviderFamily = :ProviderFamily,
             ChannelIds = :ChannelIds,
@@ -29,10 +28,9 @@ def save_data_to_db(data, engine, table_name):
         transaction = connection.begin()
         try:
             for record in data:
-                connection.begin(insert_stmt, {
+                connection.execute(insert_stmt, {
                     'last_update': current_time,
                     'VervotechId': record.get('VervotechId'),
-                    'UpdateDateFormat': record.get('UpdateDateFormat') or None,
                     'ProviderHotelId': record.get('ProviderHotelId'),
                     'ProviderFamily': record.get('ProviderName'),
                     'ChannelIds': None,
@@ -284,8 +282,8 @@ def save_json_file(engine):
     """
 
     # Directory to save JSON files
-    json_dir = "/var/www/hotelmap.gtrsystem.com"
-    # json_dir = "D:/data_validation/logs/json_file"
+    # json_dir = "/var/www/hotelmap.gtrsystem.com"
+    json_dir = "D:/data_validation/logs/json_file"
     os.makedirs(json_dir, exist_ok=True)
 
     fetch_data_stmt = text("""

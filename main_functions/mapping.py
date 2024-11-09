@@ -23,7 +23,7 @@ def get_new_mapping_data_process():
     for family in families:
         print(f"Checking provider family: {family}")
         params = get_new_mapping_params(family)
-        print(params)
+        # print(params)
 
         headers = get_new_mapping_headers(env_vars['vervotech_api_key'])
 
