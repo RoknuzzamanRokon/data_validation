@@ -8,7 +8,49 @@ from api_call.headers import get_content_by_provider_hotel_ids_headers
 from env_request.request_env import load_environment_variables_local
 
 
+# def save_data_to_db(data, engine, table_name):
+#     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
+#     log = ""
+#     insert_stmt = text(f"""
+#         INSERT INTO {table_name} (last_update, VervotechId, ProviderHotelId, ProviderFamily, ChannelIds, ProviderLocationCode, status)
+#         VALUES (:last_update, :VervotechId, :ProviderHotelId,  :ProviderFamily, :ChannelIds, :ProviderLocationCode, :status)
+#         ON DUPLICATE KEY UPDATE
+#             last_update = :last_update,
+#             VervotechId = :VervotechId,
+#             ProviderHotelId = :ProviderHotelId,
+#             ProviderFamily = :ProviderFamily,
+#             ChannelIds = :ChannelIds,
+#             ProviderLocationCode = :ProviderLocationCode,
+#             status = :status
+#     """)
+
+#     with engine.connect() as connection:
+#         transaction = connection.begin()
+#         try:
+#             for record in data:
+#                 connection.execute(insert_stmt, {
+#                     'last_update': current_time,
+#                     'VervotechId': record.get('VervotechId'),
+#                     'ProviderHotelId': record.get('ProviderHotelId'),
+#                     'ProviderFamily': record.get('ProviderName'),
+#                     'ChannelIds': None,
+#                     'ProviderLocationCode': record.get('ProviderLocationCode') or None,
+#                     'status' : "new_data"
+#                 })
+#                 log += f"Record with VervotechId {record.get('VervotechId')} inserted/updated successfully.\n"
+#             transaction.commit()
+#             log += "Transaction committed successfully.\n"
+#             print(f"Vervotech {len(data)} data insert")
+#         except Exception as e:
+#             transaction.rollback()
+#             log += f"Transaction failed: {e}\n"
+#     return log
+
 def save_data_to_db(data, engine, table_name):
+    """
+    Saves or updates data in the database and logs each action.
+    Immediately commits changes to reflect in the database after each record.
+    """
     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
     log = ""
     insert_stmt = text(f"""
@@ -25,9 +67,8 @@ def save_data_to_db(data, engine, table_name):
     """)
 
     with engine.connect() as connection:
-        transaction = connection.begin()
-        try:
-            for record in data:
+        for record in data:
+            try:
                 connection.execute(insert_stmt, {
                     'last_update': current_time,
                     'VervotechId': record.get('VervotechId'),
@@ -35,15 +76,14 @@ def save_data_to_db(data, engine, table_name):
                     'ProviderFamily': record.get('ProviderName'),
                     'ChannelIds': None,
                     'ProviderLocationCode': record.get('ProviderLocationCode') or None,
-                    'status' : "new_data"
+                    'status': "new_data"
                 })
                 log += f"Record with VervotechId {record.get('VervotechId')} inserted/updated successfully.\n"
-            transaction.commit()
-            log += "Transaction committed successfully.\n"
-            print(f"Vervotech {len(data)} data insert")
-        except Exception as e:
-            transaction.rollback()
-            log += f"Transaction failed: {e}\n"
+                print(f"Record with VervotechId {record.get('VervotechId')} saved to database.")
+            except Exception as e:
+                log += f"Failed to insert/update record with VervotechId {record.get('VervotechId')}: {e}\n"
+                print(f"Error saving record with VervotechId {record.get('VervotechId')}: {e}")
+    
     return log
 
 
@@ -116,116 +156,97 @@ def new_mapping_fetch_data(url, params, headers, engine, table_name):
             print("No data found in response.")
             break
 
-
 def update_vervotech_mapping_data(engine):
     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
 
-    insert_into_table_3_stmt = text(f"""
+    def execute_statement(connection, statement, parameters=None):
+        try:
+            return connection.execute(statement, parameters or {})
+        except exc.SQLAlchemyError as e:
+            print(f"Error executing statement: {e}")
+            raise
+
+    insert_stmt = text("""
         INSERT INTO vervotech_mapping
         (last_update, VervotechId, UpdateDateFormat, ProviderHotelId, ProviderFamily, ModifiedOn, ChannelIds, ProviderLocationCode, status)
         VALUES (:last_update, :VervotechId, :UpdateDateFormat, :ProviderHotelId, :ProviderFamily, :ModifiedOn, :ChannelIds, :ProviderLocationCode, 'Update')
     """)
 
-    check_existing_record_stmt = text(f"""
+    check_record_stmt = text("""
         SELECT VervotechId, ProviderHotelId, ProviderFamily, ProviderLocationCode
         FROM vervotech_mapping
         WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
     """)
 
-    def update_mapping_from_table(table_name):
-        update_status_skipping_stmt = text(f"""
+    def update_table_status(connection, table_name, VervotechId, ProviderHotelId, ProviderFamily, status):
+        update_status_stmt = text(f"""
             UPDATE {table_name}
-            SET status = 'Skipping data'
+            SET status = :status
             WHERE VervotechId = :VervotechId 
             AND ProviderHotelId = :ProviderHotelId 
             AND ProviderFamily = :ProviderFamily
         """)
+        execute_statement(connection, update_status_stmt, {
+            'VervotechId': VervotechId,
+            'ProviderHotelId': ProviderHotelId,
+            'ProviderFamily': ProviderFamily,
+            'status': status
+        })
 
-        update_status_successful_stmt = text(f"""
-            UPDATE {table_name}
-            SET status = 'Update data successful'
-            WHERE VervotechId = :VervotechId 
-            AND ProviderHotelId = :ProviderHotelId 
-            AND ProviderFamily = :ProviderFamily
-        """)
-
-        select_new_data_stmt = text(f"""
+    def process_table_data(table_name):
+        select_stmt = text(f"""
             SELECT * FROM {table_name}
             WHERE status = 'new_data'
         """)
 
-        with engine.begin() as connection: 
-            try:
-                result = connection.execute(select_new_data_stmt)
-                records = result.mappings().all()
+        with engine.begin() as connection:
+            records = execute_statement(connection, select_stmt).mappings().all()
+            if not records:
+                print(f"No new records found in {table_name}.")
+                return
 
-                if not records:
-                    print(f"No new records found in {table_name}.")
-                    return  
-                for record in records:
-                    existing_record_result = connection.execute(check_existing_record_stmt, {
-                        'VervotechId': record['VervotechId'],
-                        'ProviderHotelId': record['ProviderHotelId'],
-                        'ProviderFamily': record['ProviderFamily'],
-                    })
-                    existing_record = existing_record_result.mappings().first()
+            for record in records:
+                existing_record = execute_statement(connection, check_record_stmt, {
+                    'VervotechId': record['VervotechId'],
+                    'ProviderHotelId': record['ProviderHotelId'],
+                    'ProviderFamily': record['ProviderFamily'],
+                }).mappings().first()
 
-                    if existing_record:
-                        if (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
-                                record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
-                                record['ProviderFamily'] != existing_record['ProviderFamily']):
-                            print(f"Record with VervotechId {record['VervotechId']} has changed, updating.")
-                            
-                            connection.execute(insert_into_table_3_stmt, {
-                                'last_update': current_time,
-                                'VervotechId': record['VervotechId'],
-                                'UpdateDateFormat': record['UpdateDateFormat'] or None,
-                                'ProviderHotelId': record['ProviderHotelId'],
-                                'ProviderFamily': record['ProviderFamily'],
-                                'ModifiedOn': current_time,
-                                'ChannelIds': record['ChannelIds'] or None,
-                                'ProviderLocationCode': record['ProviderLocationCode'] or None,
-                                'status': 'Update'
-                            })
-
-                            connection.execute(update_status_successful_stmt, {
-                                'VervotechId': record['VervotechId'],
-                                'ProviderHotelId': record['ProviderHotelId'],
-                                'ProviderFamily': record['ProviderFamily']
-                            })
-                        else:
-                            print(f"Record with VervotechId {record['VervotechId']} already exists with no changes. Skipping.")
-                            connection.execute(update_status_skipping_stmt, {
-                                'VervotechId': record['VervotechId'],
-                                'ProviderHotelId': record['ProviderHotelId'],
-                                'ProviderFamily': record['ProviderFamily']
-                            })
-                    else:
-                        print(f"Inserting new record with VervotechId {record['VervotechId']}.")
-                        connection.execute(insert_into_table_3_stmt, {
+                if existing_record:
+                    if (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
+                            record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
+                            record['ProviderFamily'] != existing_record['ProviderFamily']):
+                        print(f"Updating record with VervotechId {record['VervotechId']}.")
+                        execute_statement(connection, insert_stmt, {
                             'last_update': current_time,
                             'VervotechId': record['VervotechId'],
-                            'UpdateDateFormat': record['UpdateDateFormat'] or None,
+                            'UpdateDateFormat': record.get('UpdateDateFormat'),
                             'ProviderHotelId': record['ProviderHotelId'],
                             'ProviderFamily': record['ProviderFamily'],
                             'ModifiedOn': current_time,
-                            'ChannelIds': record['ChannelIds'] or None,
-                            'ProviderLocationCode': record['ProviderLocationCode'] or None,
-                            'status': 'Update'
+                            'ChannelIds': record.get('ChannelIds'),
+                            'ProviderLocationCode': record.get('ProviderLocationCode')
                         })
+                        update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], record['ProviderFamily'], 'Update data successful')
+                    else:
+                        print(f"Skipping unchanged record with VervotechId {record['VervotechId']}.")
+                        update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], record['ProviderFamily'], 'Skipping data')
+                else:
+                    print(f"Inserting new record with VervotechId {record['VervotechId']}.")
+                    execute_statement(connection, insert_stmt, {
+                        'last_update': current_time,
+                        'VervotechId': record['VervotechId'],
+                        'UpdateDateFormat': record.get('UpdateDateFormat'),
+                        'ProviderHotelId': record['ProviderHotelId'],
+                        'ProviderFamily': record['ProviderFamily'],
+                        'ModifiedOn': current_time,
+                        'ChannelIds': record.get('ChannelIds'),
+                        'ProviderLocationCode': record.get('ProviderLocationCode')
+                    })
+                    update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], record['ProviderFamily'], 'Update data successful')
 
-                        connection.execute(update_status_successful_stmt, {
-                            'VervotechId': record['VervotechId'],
-                            'ProviderHotelId': record['ProviderHotelId'],
-                            'ProviderFamily': record['ProviderFamily']
-                        })
-
-            except exc.SQLAlchemyError as e:
-                print(f"Error occurred during database operation: {e}")
-                raise  # Will automatically rollback on error
-
-    update_mapping_from_table('vervotech_hotel_map_new')
-    update_mapping_from_table('vervotech_hotel_map_update')
+    process_table_data('vervotech_hotel_map_new')
+    process_table_data('vervotech_hotel_map_update')
 
 
 
@@ -251,7 +272,7 @@ def update_hotel_mapping_with_content(url, engine, table_name):
                 return  # Exit the function if no rows are found
 
             for row in rows:
-                record_id, provider_hotel_id, provider_family = row  # Unpack the tuple
+                record_id, provider_hotel_id, provider_family = row 
 
                 payload = get_content_by_provider_hotel_ids_create_payload(provider_hotel_id=provider_hotel_id, provider_family=provider_family)
 
@@ -331,6 +352,90 @@ def save_json_file(engine):
             print(f"Saved data for VervotechId {vervotech_id} to {json_file_path}")
 
 
+# def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
+#     """ 
+#     Fetches data from the API using the provided URL, payload, and headers, 
+#     and updates the specified database table with the hotel data using raw SQL queries.
+#     """
+#     with engine.connect() as connection:
+#         try:
+#             env_vars = load_environment_variables_local()
+#             api_key = env_vars['vervotech_api_key']
+#             headers = get_content_by_provider_hotel_ids_headers(api_key) 
+            
+#             response = requests.post(url, headers=headers, data=payload)
+            
+#             if response.status_code == 200:
+#                 try:
+#                     data = response.json()
+#                 except ValueError:
+#                     print(f"Failed to parse JSON for record {record_id}")
+#                     return False
+                
+#                 hotels = data.get('Hotels', [])
+                
+#                 for hotel in hotels:
+#                     provider_hotels = hotel.get('ProviderHotels', [])
+#                     for provider_hotel in provider_hotels:
+#                         # Extract required data
+#                         hotel_name = provider_hotel.get('Name')
+#                         city = provider_hotel.get('Contact', {}).get('Address', {}).get('City', 'Unknown')
+#                         country = provider_hotel.get('Contact', {}).get('Address', {}).get('Country', 'Unknown')
+
+#                         geo_code = provider_hotel.get('GeoCode', {})
+#                         lat = geo_code.get('Lat') if geo_code else None
+#                         long = geo_code.get('Long') if geo_code else None
+#                         country_code = provider_hotel.get('Contact', {}).get('Address', {}).get('CountryCode', 'Unknown')
+#                         last_update = datetime.now()
+#                         content_update_status = 'Done'
+
+#                         provider_hotel_id = provider_hotel.get('ProviderHotelId')
+                        
+#                         # Create the raw SQL query for updating the table
+#                         update_query = text(f"""
+#                             UPDATE {table_name}
+#                             SET 
+#                                 hotel_name = :hotel_name,
+#                                 hotel_city = :city,
+#                                 hotel_country = :country,
+#                                 hotel_latitude = :lat,
+#                                 hotel_longitude = :long,
+#                                 country_code = :country_code,
+#                                 last_update = :last_update,
+#                                 content_update_status = :content_update_status
+#                             WHERE Id = :record_id
+#                         """)
+
+#                         # Execute the update query within the transaction
+#                         connection.execute(update_query, {
+#                             'hotel_name': hotel_name,
+#                             'city': city,
+#                             'country': country,
+#                             'lat': lat,
+#                             'long': long,
+#                             'country_code': country_code,
+#                             'last_update': last_update,
+#                             'content_update_status': content_update_status,
+#                             'record_id': record_id
+#                         })
+#                         print(f"Update successfully for provider hotel Id {provider_hotel_id}")
+
+#                 return True
+#             else:
+#                 print(f"Failed to fetch data for record {record_id}. Status Code: {response.status_code}")
+#                 return False
+        
+#         except exc.SQLAlchemyError as e:
+#             print(f"Database error occurred: {e}")
+#             return False
+        
+#         except requests.exceptions.RequestException as e:
+#             print(f"Request error occurred: {e}")
+#             return False
+
+
+
+
 def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
     """ 
     Fetches data from the API using the provided URL, payload, and headers, 
@@ -370,34 +475,38 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
 
                         provider_hotel_id = provider_hotel.get('ProviderHotelId')
                         
-                        # Create the raw SQL query for updating the table
-                        update_query = text(f"""
-                            UPDATE {table_name}
-                            SET 
-                                hotel_name = :hotel_name,
-                                hotel_city = :city,
-                                hotel_country = :country,
-                                hotel_latitude = :lat,
-                                hotel_longitude = :long,
-                                country_code = :country_code,
-                                last_update = :last_update,
-                                content_update_status = :content_update_status
-                            WHERE Id = :record_id
-                        """)
+                        # Save data to the database immediately
+                        try:
+                            update_query = text(f"""
+                                UPDATE {table_name}
+                                SET 
+                                    hotel_name = :hotel_name,
+                                    hotel_city = :city,
+                                    hotel_country = :country,
+                                    hotel_latitude = :lat,
+                                    hotel_longitude = :long,
+                                    country_code = :country_code,
+                                    last_update = :last_update,
+                                    content_update_status = :content_update_status
+                                WHERE Id = :record_id
+                            """)
 
-                        # Execute the update query within the transaction
-                        connection.execute(update_query, {
-                            'hotel_name': hotel_name,
-                            'city': city,
-                            'country': country,
-                            'lat': lat,
-                            'long': long,
-                            'country_code': country_code,
-                            'last_update': last_update,
-                            'content_update_status': content_update_status,
-                            'record_id': record_id
-                        })
-                        print(f"Update successfully for provider hotel Id {provider_hotel_id}")
+                            connection.execute(update_query, {
+                                'hotel_name': hotel_name,
+                                'city': city,
+                                'country': country,
+                                'lat': lat,
+                                'long': long,
+                                'country_code': country_code,
+                                'last_update': last_update,
+                                'content_update_status': content_update_status,
+                                'record_id': record_id
+                            })
+                            connection.commit()
+                            print(f"Update successfully for provider hotel Id {provider_hotel_id}")
+                        except exc.SQLAlchemyError as db_err:
+                            print(f"Database error while updating provider hotel Id {provider_hotel_id}: {db_err}")
+                            continue
 
                 return True
             else:
@@ -411,4 +520,3 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
         except requests.exceptions.RequestException as e:
             print(f"Request error occurred: {e}")
             return False
-
