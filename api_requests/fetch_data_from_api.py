@@ -161,9 +161,12 @@ def update_vervotech_mapping_data(engine):
 
     def execute_statement(connection, statement, parameters=None):
         try:
-            return connection.execute(statement, parameters or {})
+            result = connection.execute(statement, parameters or {})
+            connection.commit()  
+            return result
         except exc.SQLAlchemyError as e:
             print(f"Error executing statement: {e}")
+            connection.rollback() 
             raise
 
     insert_stmt = text("""
