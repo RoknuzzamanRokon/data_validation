@@ -5,7 +5,6 @@ from env_request.request_env import load_environment_variables, load_environment
 from database.db_connection import get_database_engine
 from api_requests.log_runner import log_run_time_update_mapping_local, log_run_time_new_mapping_local, run_time_check
 from api_requests.fetch_data_from_api import update_mapping_fetch_data, new_mapping_fetch_data, update_vervotech_mapping_data, save_json_file, update_hotel_mapping_with_content
-
 from api_requests.fetch_data_from_database import get_provider_family_active_list
 
 def get_new_mapping_data_process():

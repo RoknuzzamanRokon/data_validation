@@ -74,13 +74,15 @@ def save_data_to_db(data, engine, table_name):
                     'VervotechId': record.get('VervotechId'),
                     'ProviderHotelId': record.get('ProviderHotelId'),
                     'ProviderFamily': record.get('ProviderName'),
-                    'ChannelIds': None,
+                    'ChannelIds': record.get('ChannelIds') or None,
                     'ProviderLocationCode': record.get('ProviderLocationCode') or None,
                     'status': "new_data"
                 })
+                connection.commit()
                 log += f"Record with VervotechId {record.get('VervotechId')} inserted/updated successfully.\n"
                 print(f"Record with VervotechId {record.get('VervotechId')} saved to database.")
             except Exception as e:
+                connection.rollback()
                 log += f"Failed to insert/update record with VervotechId {record.get('VervotechId')}: {e}\n"
                 print(f"Error saving record with VervotechId {record.get('VervotechId')}: {e}")
     
@@ -219,7 +221,8 @@ def update_vervotech_mapping_data(engine):
                     if (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
                             record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
                             record['ProviderFamily'] != existing_record['ProviderFamily']):
-                        print(f"Updating record with VervotechId {record['VervotechId']}.")
+                        
+
                         execute_statement(connection, insert_stmt, {
                             'last_update': current_time,
                             'VervotechId': record['VervotechId'],
@@ -231,11 +234,12 @@ def update_vervotech_mapping_data(engine):
                             'ProviderLocationCode': record.get('ProviderLocationCode')
                         })
                         update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], record['ProviderFamily'], 'Update data successful')
+                        print(f"Updating record with VervotechId {record['VervotechId']}.")
                     else:
-                        print(f"Skipping unchanged record with VervotechId {record['VervotechId']}.")
                         update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], record['ProviderFamily'], 'Skipping data')
+                        print(f"Skipping unchanged record with VervotechId {record['VervotechId']}.")
                 else:
-                    print(f"Inserting new record with VervotechId {record['VervotechId']}.")
+
                     execute_statement(connection, insert_stmt, {
                         'last_update': current_time,
                         'VervotechId': record['VervotechId'],
@@ -247,6 +251,7 @@ def update_vervotech_mapping_data(engine):
                         'ProviderLocationCode': record.get('ProviderLocationCode')
                     })
                     update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], record['ProviderFamily'], 'Update data successful')
+                    print(f"Inserting new record with VervotechId {record['VervotechId']}.")
 
     process_table_data('vervotech_hotel_map_new')
     process_table_data('vervotech_hotel_map_update')
@@ -355,88 +360,9 @@ def save_json_file(engine):
             print(f"Saved data for VervotechId {vervotech_id} to {json_file_path}")
 
 
-# def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
-#     """ 
-#     Fetches data from the API using the provided URL, payload, and headers, 
-#     and updates the specified database table with the hotel data using raw SQL queries.
-#     """
-#     with engine.connect() as connection:
-#         try:
-#             env_vars = load_environment_variables_local()
-#             api_key = env_vars['vervotech_api_key']
-#             headers = get_content_by_provider_hotel_ids_headers(api_key) 
-            
-#             response = requests.post(url, headers=headers, data=payload)
-            
-#             if response.status_code == 200:
-#                 try:
-#                     data = response.json()
-#                 except ValueError:
-#                     print(f"Failed to parse JSON for record {record_id}")
-#                     return False
-                
-#                 hotels = data.get('Hotels', [])
-                
-#                 for hotel in hotels:
-#                     provider_hotels = hotel.get('ProviderHotels', [])
-#                     for provider_hotel in provider_hotels:
-#                         # Extract required data
-#                         hotel_name = provider_hotel.get('Name')
-#                         city = provider_hotel.get('Contact', {}).get('Address', {}).get('City', 'Unknown')
-#                         country = provider_hotel.get('Contact', {}).get('Address', {}).get('Country', 'Unknown')
-
-#                         geo_code = provider_hotel.get('GeoCode', {})
-#                         lat = geo_code.get('Lat') if geo_code else None
-#                         long = geo_code.get('Long') if geo_code else None
-#                         country_code = provider_hotel.get('Contact', {}).get('Address', {}).get('CountryCode', 'Unknown')
-#                         last_update = datetime.now()
-#                         content_update_status = 'Done'
-
-#                         provider_hotel_id = provider_hotel.get('ProviderHotelId')
-                        
-#                         # Create the raw SQL query for updating the table
-#                         update_query = text(f"""
-#                             UPDATE {table_name}
-#                             SET 
-#                                 hotel_name = :hotel_name,
-#                                 hotel_city = :city,
-#                                 hotel_country = :country,
-#                                 hotel_latitude = :lat,
-#                                 hotel_longitude = :long,
-#                                 country_code = :country_code,
-#                                 last_update = :last_update,
-#                                 content_update_status = :content_update_status
-#                             WHERE Id = :record_id
-#                         """)
-
-#                         # Execute the update query within the transaction
-#                         connection.execute(update_query, {
-#                             'hotel_name': hotel_name,
-#                             'city': city,
-#                             'country': country,
-#                             'lat': lat,
-#                             'long': long,
-#                             'country_code': country_code,
-#                             'last_update': last_update,
-#                             'content_update_status': content_update_status,
-#                             'record_id': record_id
-#                         })
-#                         print(f"Update successfully for provider hotel Id {provider_hotel_id}")
-
-#                 return True
-#             else:
-#                 print(f"Failed to fetch data for record {record_id}. Status Code: {response.status_code}")
-#                 return False
-        
-#         except exc.SQLAlchemyError as e:
-#             print(f"Database error occurred: {e}")
-#             return False
-        
-#         except requests.exceptions.RequestException as e:
-#             print(f"Request error occurred: {e}")
-#             return False
-
-
+from database.db_connection import get_database_engine
+from api_requests.fetch_data_from_database import get_provider_family_active_list, get_iit_supplier_code
+from env_request.request_env import load_environment_variables_local
 
 
 def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
@@ -466,6 +392,19 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
                     for provider_hotel in provider_hotels:
                         # Extract required data
                         hotel_name = provider_hotel.get('Name')
+                        family = provider_hotel.get('ProviderFamily')
+
+                        env_vars = load_environment_variables_local()
+                        engine = get_database_engine(env_vars=env_vars)
+                        active_families = get_provider_family_active_list(table='vervotech_ProviderFamily', engine=engine)
+                        # active_families = ['HotelBeds', 'EAN', 'MGHoliday', 'Agoda', 'DOTW', 'Restel']
+                        iit_supplier_code = get_iit_supplier_code(table='vervotech_ProviderFamily', engine=engine)
+                        # iit_supplier_code = ['hotelbeds', 'ean', 'mgholiday', 'agoda', 'DOTW', 'restel']
+                        if family in active_families:
+                            family_index = active_families.index(family)
+                            family = iit_supplier_code[family_index]
+
+
                         city = provider_hotel.get('Contact', {}).get('Address', {}).get('City', 'Unknown')
                         country = provider_hotel.get('Contact', {}).get('Address', {}).get('Country', 'Unknown')
 
@@ -483,6 +422,7 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
                             update_query = text(f"""
                                 UPDATE {table_name}
                                 SET 
+                                    ProviderFamily = :provider_family,
                                     hotel_name = :hotel_name,
                                     hotel_city = :city,
                                     hotel_country = :country,
@@ -495,6 +435,7 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
                             """)
 
                             connection.execute(update_query, {
+                                'provider_family': family,
                                 'hotel_name': hotel_name,
                                 'city': city,
                                 'country': country,
