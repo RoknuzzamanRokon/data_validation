@@ -191,8 +191,8 @@ def update_vervotech_mapping_data(engine):
                         'ProviderFamily': record['ProviderFamily'],
                         'status': 'Update data successful'
                     })
-                    session.flush()  # Explicitly flush changes
-                    session.commit()  # Commit the transaction
+                    session.flush()  
+                    session.commit() 
                     print(f"Inserting new record with VervotechId {record['VervotechId']}.")
 
                 # Update existing record if any change is found
@@ -216,8 +216,8 @@ def update_vervotech_mapping_data(engine):
                         'ProviderFamily': record['ProviderFamily'],
                         'status': 'Update data successful'
                     })
-                    session.flush()  # Explicitly flush changes
-                    session.commit()  # Commit the transaction
+                    session.flush()  
+                    session.commit()  
                     print(f"Updating record with VervotechId {record['VervotechId']}.")
 
                 # If nothing changed, mark as 'Skipping data'
@@ -229,8 +229,8 @@ def update_vervotech_mapping_data(engine):
                         'ProviderFamily': record['ProviderFamily'],
                         'status': 'Skipping data'
                     })
-                    session.flush()  # Explicitly flush changes
-                    session.commit()  # Commit the transaction
+                    session.flush() 
+                    session.commit() 
                     print(f"Skipping unchanged record with VervotechId {record['VervotechId']}.")
 
     # Process both tables
@@ -249,9 +249,10 @@ def update_hotel_mapping_with_content(url, engine, table_name):
     with engine.connect() as connection:
         try:
             select_query = text(f"""
-                SELECT Id, ProviderHotelId, ProviderFamily 
-                FROM {table_name} 
-                WHERE content_update_status IS NULL OR content_update_status != 'Done'
+                SELECT Id, ProviderHotelId, ProviderFamily
+                FROM {table_name}
+                WHERE (content_update_status IS NULL OR content_update_status != 'Done')
+                AND ModifiedOn >= DATE_SUB(CURDATE(), INTERVAL 10 DAY)
             """)
             result = connection.execute(select_query)
             rows = result.fetchall() 
@@ -427,7 +428,7 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
                                 'record_id': record_id
                             })
                             connection.commit()
-                            print(f"Update successfully for provider hotel Id {provider_hotel_id}")
+                            # print(f"Update successfully for provider hotel Id {provider_hotel_id}")
                         except exc.SQLAlchemyError as db_err:
                             print(f"Database error while updating provider hotel Id {provider_hotel_id}: {db_err}")
                             continue
