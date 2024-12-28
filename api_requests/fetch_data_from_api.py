@@ -125,14 +125,146 @@ def new_mapping_fetch_data(url, params, headers, engine, table_name):
 
 
         
+# def update_vervotech_mapping_data(engine):
+#     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
+#     def execute_statement(session, statement, parameters=None):
+#         try:
+#             result = session.execute(statement, parameters or {})
+#             return result
+#         except exc.SQLAlchemyError as e:
+#             print(f"Error executing statement: {e}")
+#             raise
+
+#     insert_stmt = text("""
+#         INSERT INTO vervotech_mapping
+#         (last_update, VervotechId, UpdateDateFormat, ProviderHotelId, ProviderFamily, ModifiedOn, ChannelIds, ProviderLocationCode, status)
+#         VALUES (:last_update, :VervotechId, :UpdateDateFormat, :ProviderHotelId, :ProviderFamily, :ModifiedOn, :ChannelIds, :ProviderLocationCode, 'Update')
+#     """)
+
+#     check_record_stmt = text("""
+#         SELECT VervotechId, ProviderHotelId, ProviderFamily, ProviderLocationCode
+#         FROM vervotech_mapping
+#         WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
+#     """)
+
+#     update_status_stmt_template = """
+#         UPDATE {table_name}
+#         SET status = :status
+#         WHERE VervotechId = :VervotechId 
+#         AND ProviderHotelId = :ProviderHotelId 
+#         AND ProviderFamily = :ProviderFamily
+#     """
+
+#     def process_table_data(table_name):
+#         select_stmt = text(f"""
+#             SELECT * FROM {table_name}
+#             WHERE status = 'new_data'
+#         """)
+
+#         Session = sessionmaker(bind=engine)
+#         with Session() as session:
+#             records = execute_statement(session, select_stmt).mappings().all()
+#             if not records:
+#                 print(f"No new records found in {table_name}.")
+#                 return
+
+#             for record in records:
+#                 existing_record = execute_statement(session, check_record_stmt, {
+#                     'VervotechId': record['VervotechId'],
+#                     'ProviderHotelId': record['ProviderHotelId'],
+#                     'ProviderFamily': record['ProviderFamily'],
+#                 }).mappings().first()
+
+#                 # Insert new record if it doesn't exist
+#                 if not existing_record:
+#                     execute_statement(session, insert_stmt, {
+#                         'last_update': current_time,
+#                         'VervotechId': record['VervotechId'],
+#                         'UpdateDateFormat': record.get('UpdateDateFormat'),
+#                         'ProviderHotelId': record['ProviderHotelId'],
+#                         'ProviderFamily': record['ProviderFamily'],
+#                         'ModifiedOn': current_time,
+#                         'ChannelIds': record.get('ChannelIds'),
+#                         'ProviderLocationCode': record.get('ProviderLocationCode')
+#                     })
+#                     update_status_stmt = text(update_status_stmt_template.format(table_name=table_name))
+#                     execute_statement(session, update_status_stmt, {
+#                         'VervotechId': record['VervotechId'],
+#                         'ProviderHotelId': record['ProviderHotelId'],
+#                         'ProviderFamily': record['ProviderFamily'],
+#                         'status': 'Update data successful'
+#                     })
+#                     session.flush()  # Explicitly flush changes
+#                     session.commit()  # Commit the transaction
+#                     print(f"Inserting new record with VervotechId {record['VervotechId']}.")
+
+
+
+#                 # Update existing record if any change is found
+#                 elif (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
+#                       record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
+#                       record['ProviderFamily'] != existing_record['ProviderFamily']):
+#                     execute_statement(session, insert_stmt, {
+#                         'last_update': current_time,
+#                         'VervotechId': record['VervotechId'],
+#                         'UpdateDateFormat': record.get('UpdateDateFormat'),
+#                         'ProviderHotelId': record['ProviderHotelId'],
+#                         'ProviderFamily': record['ProviderFamily'],
+#                         'ModifiedOn': current_time,
+#                         'ChannelIds': record.get('ChannelIds'),
+#                         'ProviderLocationCode': record.get('ProviderLocationCode')
+#                     })
+#                     update_status_stmt = text(update_status_stmt_template.format(table_name=table_name))
+#                     execute_statement(session, update_status_stmt, {
+#                         'VervotechId': record['VervotechId'],
+#                         'ProviderHotelId': record['ProviderHotelId'],
+#                         'ProviderFamily': record['ProviderFamily'],
+#                         'status': 'Update data successful'
+#                     })
+#                     session.flush()  # Explicitly flush changes
+#                     session.commit()  # Commit the transaction
+#                     print(f"Updating record with VervotechId {record['VervotechId']}.")
+
+
+
+
+#                 # If nothing changed, mark as 'Skipping data'
+#                 else:
+#                     update_status_stmt = text(update_status_stmt_template.format(table_name=table_name))
+#                     execute_statement(session, update_status_stmt, {
+#                         'VervotechId': record['VervotechId'],
+#                         'ProviderHotelId': record['ProviderHotelId'],
+#                         'ProviderFamily': record['ProviderFamily'],
+#                         'status': 'Skipping data'
+#                     })
+#                     session.flush()  # Explicitly flush changes
+#                     session.commit()  # Commit the transaction
+#                     print(f"Skipping unchanged record with VervotechId {record['VervotechId']}.")
+
+#     # Process both tables
+#     process_table_data('vervotech_hotel_map_new')
+#     process_table_data('vervotech_hotel_map_update')
+
+
+
+
+
+
+
+
+
+
 def update_vervotech_mapping_data(engine):
     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
-    def execute_statement(session, statement, parameters=None):
+
+    def execute_statement(connection, statement, parameters=None):
         try:
-            result = session.execute(statement, parameters or {})
+            result = connection.execute(statement, parameters or {})
+            connection.commit()  
             return result
         except exc.SQLAlchemyError as e:
             print(f"Error executing statement: {e}")
+            connection.rollback() 
             raise
 
     insert_stmt = text("""
@@ -147,13 +279,18 @@ def update_vervotech_mapping_data(engine):
         WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
     """)
 
-    update_status_stmt_template = """
-        UPDATE {table_name}
-        SET status = :status
-        WHERE VervotechId = :VervotechId 
-        AND ProviderHotelId = :ProviderHotelId 
-        AND ProviderFamily = :ProviderFamily
-    """
+    def update_table_status(connection, table_name, VervotechId, ProviderHotelId, status):
+        update_status_stmt = text(f"""
+            UPDATE {table_name}
+            SET status = :status
+            WHERE VervotechId = :VervotechId 
+            AND ProviderHotelId = :ProviderHotelId 
+        """)
+        execute_statement(connection, update_status_stmt, {
+            'VervotechId': VervotechId,
+            'ProviderHotelId': ProviderHotelId,
+            'status': status
+        })
 
     def process_table_data(table_name):
         select_stmt = text(f"""
@@ -162,22 +299,47 @@ def update_vervotech_mapping_data(engine):
         """)
 
         Session = sessionmaker(bind=engine)
-        with Session() as session:
-            records = execute_statement(session, select_stmt).mappings().all()
+        with Session() as connection:
+            records = execute_statement(connection, select_stmt).mappings().all()
             if not records:
                 print(f"No new records found in {table_name}.")
                 return
 
             for record in records:
-                existing_record = execute_statement(session, check_record_stmt, {
+                existing_record = execute_statement(connection, check_record_stmt, {
                     'VervotechId': record['VervotechId'],
                     'ProviderHotelId': record['ProviderHotelId'],
                     'ProviderFamily': record['ProviderFamily'],
                 }).mappings().first()
 
-                # Insert new record if it doesn't exist
-                if not existing_record:
-                    execute_statement(session, insert_stmt, {
+                if existing_record:
+                    if (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
+                            record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
+                            record['ProviderFamily'] != existing_record['ProviderFamily']):
+                        
+
+                        execute_statement(connection, insert_stmt, {
+                            'last_update': current_time,
+                            'VervotechId': record['VervotechId'],
+                            'UpdateDateFormat': record.get('UpdateDateFormat'),
+                            'ProviderHotelId': record['ProviderHotelId'],
+                            'ProviderFamily': record['ProviderFamily'],
+                            'ModifiedOn': current_time,
+                            'ChannelIds': record.get('ChannelIds'),
+                            'ProviderLocationCode': record.get('ProviderLocationCode')
+                        })
+                        update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], 'Update data successful')
+                        connection.flush()  
+                        connection.commit()
+                        print(f"Updating record with VervotechId {record['VervotechId']}.")
+                    else:
+                        update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], 'Skipping data')
+                        connection.flush()  
+                        connection.commit()
+                        print(f"Skipping unchanged record with VervotechId {record['VervotechId']}.")
+                else:
+
+                    execute_statement(connection, insert_stmt, {
                         'last_update': current_time,
                         'VervotechId': record['VervotechId'],
                         'UpdateDateFormat': record.get('UpdateDateFormat'),
@@ -187,63 +349,14 @@ def update_vervotech_mapping_data(engine):
                         'ChannelIds': record.get('ChannelIds'),
                         'ProviderLocationCode': record.get('ProviderLocationCode')
                     })
-                    update_status_stmt = text(update_status_stmt_template.format(table_name=table_name))
-                    execute_statement(session, update_status_stmt, {
-                        'VervotechId': record['VervotechId'],
-                        'ProviderHotelId': record['ProviderHotelId'],
-                        'ProviderFamily': record['ProviderFamily'],
-                        'status': 'Update data successful'
-                    })
-                    session.flush()  # Explicitly flush changes
-                    session.commit()  # Commit the transaction
+                    update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], 'Update data successful')
+                    connection.flush()  
+                    connection.commit()
                     print(f"Inserting new record with VervotechId {record['VervotechId']}.")
 
-
-
-                # Update existing record if any change is found
-                elif (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
-                      record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
-                      record['ProviderFamily'] != existing_record['ProviderFamily']):
-                    execute_statement(session, insert_stmt, {
-                        'last_update': current_time,
-                        'VervotechId': record['VervotechId'],
-                        'UpdateDateFormat': record.get('UpdateDateFormat'),
-                        'ProviderHotelId': record['ProviderHotelId'],
-                        'ProviderFamily': record['ProviderFamily'],
-                        'ModifiedOn': current_time,
-                        'ChannelIds': record.get('ChannelIds'),
-                        'ProviderLocationCode': record.get('ProviderLocationCode')
-                    })
-                    update_status_stmt = text(update_status_stmt_template.format(table_name=table_name))
-                    execute_statement(session, update_status_stmt, {
-                        'VervotechId': record['VervotechId'],
-                        'ProviderHotelId': record['ProviderHotelId'],
-                        'ProviderFamily': record['ProviderFamily'],
-                        'status': 'Update data successful'
-                    })
-                    session.flush()  # Explicitly flush changes
-                    session.commit()  # Commit the transaction
-                    print(f"Updating record with VervotechId {record['VervotechId']}.")
-
-
-
-
-                # If nothing changed, mark as 'Skipping data'
-                else:
-                    update_status_stmt = text(update_status_stmt_template.format(table_name=table_name))
-                    execute_statement(session, update_status_stmt, {
-                        'VervotechId': record['VervotechId'],
-                        'ProviderHotelId': record['ProviderHotelId'],
-                        'ProviderFamily': record['ProviderFamily'],
-                        'status': 'Skipping data'
-                    })
-                    session.flush()  # Explicitly flush changes
-                    session.commit()  # Commit the transaction
-                    print(f"Skipping unchanged record with VervotechId {record['VervotechId']}.")
-
-    # Process both tables
     process_table_data('vervotech_hotel_map_new')
     process_table_data('vervotech_hotel_map_update')
+
 
 
 
