@@ -248,12 +248,6 @@ def new_mapping_fetch_data(url, params, headers, engine, table_name):
 
 
 
-
-
-
-
-
-
 def update_vervotech_mapping_data(engine):
     current_time = datetime.now().strftime('%Y/%m/%d %H:%M:%S %p')
 
@@ -276,7 +270,7 @@ def update_vervotech_mapping_data(engine):
     check_record_stmt = text("""
         SELECT VervotechId, ProviderHotelId, ProviderFamily, ProviderLocationCode
         FROM vervotech_mapping
-        WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId AND ProviderFamily = :ProviderFamily
+        WHERE VervotechId = :VervotechId AND ProviderHotelId = :ProviderHotelId
     """)
 
     def update_table_status(connection, table_name, VervotechId, ProviderHotelId, status):
@@ -309,36 +303,14 @@ def update_vervotech_mapping_data(engine):
                 existing_record = execute_statement(connection, check_record_stmt, {
                     'VervotechId': record['VervotechId'],
                     'ProviderHotelId': record['ProviderHotelId'],
-                    'ProviderFamily': record['ProviderFamily'],
                 }).mappings().first()
 
                 if existing_record:
-                    if (record['ProviderLocationCode'] != existing_record['ProviderLocationCode'] or
-                            record['ProviderHotelId'] != existing_record['ProviderHotelId'] or
-                            record['ProviderFamily'] != existing_record['ProviderFamily']):
-                        
-
-                        execute_statement(connection, insert_stmt, {
-                            'last_update': current_time,
-                            'VervotechId': record['VervotechId'],
-                            'UpdateDateFormat': record.get('UpdateDateFormat'),
-                            'ProviderHotelId': record['ProviderHotelId'],
-                            'ProviderFamily': record['ProviderFamily'],
-                            'ModifiedOn': current_time,
-                            'ChannelIds': record.get('ChannelIds'),
-                            'ProviderLocationCode': record.get('ProviderLocationCode')
-                        })
-                        update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], 'Update data successful')
-                        connection.flush()  
-                        connection.commit()
-                        print(f"Updating record with VervotechId {record['VervotechId']}.")
-                    else:
-                        update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], 'Skipping data')
-                        connection.flush()  
-                        connection.commit()
-                        print(f"Skipping unchanged record with VervotechId {record['VervotechId']}.")
+                    update_table_status(connection, table_name, record['VervotechId'], record['ProviderHotelId'], 'Skipping data')
+                    connection.flush()  
+                    connection.commit()
+                    print(f"Skipping......... unchanged record with VervotechId {record['VervotechId']}.")
                 else:
-
                     execute_statement(connection, insert_stmt, {
                         'last_update': current_time,
                         'VervotechId': record['VervotechId'],
@@ -356,7 +328,6 @@ def update_vervotech_mapping_data(engine):
 
     process_table_data('vervotech_hotel_map_new')
     process_table_data('vervotech_hotel_map_update')
-
 
 
 
