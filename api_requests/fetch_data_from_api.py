@@ -540,25 +540,3 @@ def update_with_provider_hotel_ids(url, payload, engine, table_name, record_id):
             return False
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
